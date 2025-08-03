@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const HomePage = () => {
   return (
-    <div className="font-sans text-gray-800 bg-[#f1f7fc] min-h-screen pb-20 ">
+    <div className="font-sans text-gray-800 overflow-x-hidden bg-[#f1f7fc] min-h-screen pb-20 ">
       {/* Hero Banner */}
       <div className="max-w-7xl  mx-auto  px-4 py-4 grid grid-cols-4 gap-10">
         <div className="col-span-3 bg-white h-86 rounded shadow-sm" >

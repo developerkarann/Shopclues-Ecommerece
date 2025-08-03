@@ -5,7 +5,8 @@ import {
     MenuIcon,
     UserRound,
     X,
-    MoveLeft
+    MoveLeft,
+    ArrowLeft
 } from "lucide-react";
 import { useState } from "react";
 
@@ -13,6 +14,9 @@ import { Link } from "react-router-dom";
 
 const MobileNavbar = () => {
 
+    const [query, setQuery] = useState('');
+    const [suggestions, setSuggestions] = useState([]);
+    const [typingTimeout, setTypingTimeout] = useState(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 
     const toggleMenu = () => {
@@ -30,6 +34,48 @@ const MobileNavbar = () => {
         { name: 'Contact', href: '#contact' }
     ];
 
+
+
+    const keywordSuggestions = [
+        "MOBILES & MORE",
+        "MEN",
+        "WOMEN",
+        "HOME & KITCHEN",
+        "APPLIANCES",
+        "SPORTS & MORE",
+        "OFFERS",
+        "GLOBAL SHOPPING",
+    ];
+
+    const handleInputChange = (e) => {
+        const value = e.target.value;
+        setQuery(value);
+
+        // Clear any previous timeout
+        if (typingTimeout) clearTimeout(typingTimeout);
+
+        // Set a new timeout to simulate debounce (300ms)
+        const timeout = setTimeout(() => {
+            if (value.trim() !== '') {
+                const filtered = keywordSuggestions.filter((item) =>
+                    item.toLowerCase().includes(value.toLowerCase())
+                );
+                setSuggestions(filtered);
+            } else {
+                setSuggestions([]);
+            }
+        }, 300);
+
+        setTypingTimeout(timeout);
+    };
+
+
+    const handleSuggestionClick = (value) => {
+        setQuery(value);
+        setSuggestions([]);
+    };
+
+
     return (
         <>
             <div className="font-sans text-gray-800 block md:hidden">
@@ -42,7 +88,7 @@ const MobileNavbar = () => {
                                     onClick={toggleMenu}
                                 >
                                     {
-                                        isMenuOpen ? (<X />) : (<MenuIcon  />)
+                                        isMenuOpen ? (<X />) : (<MenuIcon />)
                                     }
                                 </button>
 
@@ -51,7 +97,7 @@ const MobileNavbar = () => {
                                         <img
                                             src="/logo.png"
                                             alt="ShopClues Logo"
-                                            className="w-30 z-50"
+                                            className="w-30 "
                                         />
                                     </div>
                                 </Link>
@@ -79,13 +125,15 @@ const MobileNavbar = () => {
                             </div>
                         </div>
 
-                        <div className="botton-section">
+                        <div className="botton-section relative">
                             <div className="flex-1 max-w-2xl mx-4 ">
                                 <div className="flex rounded overflow-hidden ">
                                     <div className="flex items-center px-3 bg-[#eaf7fb]">
                                         <Search className="text-gray-500 w-4 h-4" />
                                     </div>
                                     <input
+                                        value={query}
+                                        onChange={handleInputChange}
                                         type="text"
                                         placeholder="What is on your mind today?"
                                         className="flex-1 px-3 py-2 bg-[#eaf7fb] outline-none"
@@ -95,6 +143,20 @@ const MobileNavbar = () => {
                                     </button>
                                 </div>
                             </div>
+
+                            {suggestions.length > 0 && (
+                                <ul className="absolute w-full bg-white rounded-b shadow-2xl z-10 py-5">
+                                    {suggestions.map((item, idx) => (
+                                        <li
+                                            key={idx}
+                                            onClick={() => handleSuggestionClick(item)}
+                                            className="px-4 py-2 cursor-pointer hover:bg-blue-100"
+                                        >
+                                            {item}
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
                         </div>
                     </div>
 
@@ -115,8 +177,17 @@ const MobileNavbar = () => {
                             }`}>
                             <div className="flex flex-col h-full">
                                 {/* Header */}
-                                <div className="flex bg-cyan-600 items-center justify-between h-16 px-4 ">
-
+                                <div className="flex bg-cyan-600 items-center gap-10 h-16 px-4 ">
+                                    <ArrowLeft onClick={closeMenu} className=" text-white" />
+                                    <Link to='/' className="">
+                                        <div className="flex items-center space-x-4">
+                                            <img
+                                                src="/logo.png"
+                                                alt="ShopClues Logo"
+                                                className="w-38"
+                                            />
+                                        </div>
+                                    </Link>
                                 </div>
 
                                 {/* Navigation Items */}

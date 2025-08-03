@@ -1,8 +1,15 @@
 
 import { MapPin, Minus, Plus } from "lucide-react";
+import { useState } from "react";
 
 const HoverCard = () => {
+    let [count, setCounter] = useState(1)
 
+    const handleDecrement = () => {
+        if (count > 1) {
+            setCounter(count - 1);
+        }
+    };
 
     return (
         <>
@@ -21,11 +28,11 @@ const HoverCard = () => {
                             </p>
                             <div className="flex items-center gap-3 mt-2">
                                 <button className="w-6 h-6 flex items-center justify-center bg-gray-200 rounded-full">
-                                    <Minus className="w-4 h-4" />
+                                    <Minus className="w-4 h-4 hover:cursor-pointer" onClick={handleDecrement} />
                                 </button>
-                                <span>1</span>
+                                <span>{count}</span>
                                 <button className="w-6 h-6 flex items-center justify-center bg-gray-200 rounded-full">
-                                    <Plus className="w-4 h-4" />
+                                    <Plus className="w-4 h-4 hover:cursor-pointer" onClick={() => setCounter(count + 1)} />
                                 </button>
                             </div>
                             <button className="text-blue-500 text-sm mt-2">Remove</button>

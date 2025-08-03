@@ -1,7 +1,17 @@
 import { ArrowLeft, Minus, Plus, MapPin } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 
 const CartPage = () => {
+
+  let [count, setCount] = useState(1)
+
+
+    const handleDecrement = () => {
+        if (count > 1) {
+            setCount(count - 1);
+        }
+    };
+
   return (
     <div className="min-h-screen bg-[#f0f8fb] px-4 py-6">
       <h2 className="text-xl font-semibold mb-4">My Cart ( 1 Item )</h2>
@@ -18,14 +28,14 @@ const CartPage = () => {
             </p>
             <div className="flex items-center gap-3 mt-2">
               <button className="w-6 h-6 flex items-center justify-center bg-gray-200 rounded-full">
-                <Minus className="w-4 h-4" />
+                <Minus className="w-4 h-4  hover:cursor-pointer" onClick={handleDecrement} />
               </button>
-              <span>1</span>
+              <span>{count}</span>
               <button className="w-6 h-6 flex items-center justify-center bg-gray-200 rounded-full">
-                <Plus className="w-4 h-4" />
+                <Plus className="w-4 h-4" onClick={()=> setCount( count + 1)} />
               </button>
             </div>
-            <button className="text-blue-500 text-sm mt-2">Remove</button>
+            <button className="text-blue-500 text-sm mt-2 hover:cursor-pointer">Remove</button>
           </div>
           <div className="text-right text-sm">
             <p>

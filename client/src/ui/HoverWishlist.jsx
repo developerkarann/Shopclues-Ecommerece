@@ -1,3 +1,4 @@
+import { useState } from "react";
 
 
 const HoverWishlist = () => {
@@ -62,8 +63,8 @@ const HoverWishlist = () => {
                 <div className="mb-4 flex gap-4">
                     <span className="pb-2 font-semibold">Wishlist</span>
                 </div>
-                {orders.map((order) => (
-                    <div key={order.id} className="mb-6 pb-4 border-b border-gray-200  ">
+                {orders.map((order, i) => (
+                    <div key={i} className="mb-6 pb-4 border-b border-gray-200  ">
 
                         {order.product && (
                             <div className="flex  justify-between gap-4  ">

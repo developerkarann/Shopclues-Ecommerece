@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Search,
   ShoppingCart,
@@ -14,6 +14,50 @@ import HoverWishlist from "@/ui/HoverWishlist";
 import MobileNavbar from "./MobileNavbar";
 
 const Navbar = () => {
+
+  const [query, setQuery] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
+  const [typingTimeout, setTypingTimeout] = useState(null);
+
+
+    const keywordSuggestions = [
+    'Apple',
+    'Banana',
+    'Orange',
+    'Grapes',
+    'Pineapple',
+    'Mango',
+    'Blueberry',
+    'Strawberry',
+  ];
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setQuery(value);
+
+    // Clear any previous timeout
+    if (typingTimeout) clearTimeout(typingTimeout);
+
+    // Set a new timeout to simulate debounce (300ms)
+    const timeout = setTimeout(() => {
+      if (value.trim() !== '') {
+        const filtered = keywordSuggestions.filter((item) =>
+          item.toLowerCase().includes(value.toLowerCase())
+        );
+        setSuggestions(filtered);
+      } else {
+        setSuggestions([]);
+      }
+    }, 300);
+
+    setTypingTimeout(timeout);
+  };
+
+
+  const handleSuggestionClick = (value) => {
+    setQuery(value);
+    setSuggestions([]);
+  };
 
 
   const subNav = [
@@ -94,12 +138,14 @@ const Navbar = () => {
 
 
             {/* Search Bar */}
-            <div className="flex-1 max-w-2xl mx-4 hidden md:block ">
+            <div className="flex-1 relative max-w-2xl mx-4 hidden md:block ">
               <div className="flex rounded overflow-hidden ">
                 <div className="flex items-center px-3 bg-[#eaf7fb]">
                   <Search className="text-gray-500 w-4 h-4" />
                 </div>
                 <input
+                  value={query}
+                  onChange={handleInputChange}
                   type="text"
                   placeholder="What is on your mind today?"
                   className="flex-1 px-3 py-2 bg-[#eaf7fb] outline-none"
@@ -108,7 +154,23 @@ const Navbar = () => {
                   Search
                 </button>
               </div>
+
+              {suggestions.length > 0 && (
+                <ul className="absolute w-full bg-white rounded-b shadow-2xl z-10">
+                  {suggestions.map((item, idx) => (
+                    <li
+                      key={idx}
+                      onClick={() => handleSuggestionClick(item)}
+                      className="px-4 py-2 cursor-pointer hover:bg-blue-100"
+                    >
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
+
+
 
             {/* Right side */}
             <div className="flex items-center space-x-4 text-cyan-700 gap-2 ">
