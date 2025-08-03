@@ -63,7 +63,7 @@ const MobileNavbar = () => {
                                 <div className="flex items-center space-x-4 text-cyan-700 gap-2 pt-3 ">
 
                                     <div className="relative group">
-                                        <Link to='/wishlist'>  <Heart /> </Link>
+                                        <Link to='/account'>  <Heart /> </Link>
 
                                     </div>
 
