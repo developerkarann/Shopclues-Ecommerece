@@ -11,6 +11,7 @@ import CheckoutPage from './pages/checkout/CheckoutPage'
 import PaymentPage from './pages/checkout/PaymentPage'
 import AuthenticationPage from './pages/Authentication/AuthenticationPage'
 import Dashboard from './pages/Dashboard/Dashboard'
+import WishlistPage from './pages/wishlist/Wishlist'
 
 
 function App() {
@@ -19,7 +20,6 @@ function App() {
   return (
     <>
       <BrowserRouter>
-
         <Navbar />
         <Routes>
           <Route path='/' element={<HomePage />} />
@@ -30,9 +30,9 @@ function App() {
           <Route path='/payment' element={<PaymentPage/>} />
           <Route path='/login' element={<AuthenticationPage/>} />
           <Route path={'/account'} element={<Dashboard/>} />
+          <Route path='wishlist' element={<WishlistPage/>}/>
         </Routes>
         <Footer />
-
       </BrowserRouter>
     </>
   )

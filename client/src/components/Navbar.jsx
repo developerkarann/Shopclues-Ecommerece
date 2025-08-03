@@ -114,7 +114,7 @@ const Navbar = () => {
             <div className="flex items-center space-x-4 text-cyan-700 gap-2 ">
 
               <div className="text-md text-center ">
-                <span className="font-medium text-black">202411</span>
+                <span className="font-medium text-black">20xx51</span>
                 <div className="text-[12px] text-cyan-700 cursor-pointer">Change</div>
               </div>
               <div className="flex items-center space-x-4 text-cyan-700 gap-2 pt-3 ">

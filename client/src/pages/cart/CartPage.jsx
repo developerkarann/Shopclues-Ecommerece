@@ -4,17 +4,6 @@ import React from "react";
 const CartPage = () => {
   return (
     <div className="min-h-screen bg-[#f0f8fb] px-4 py-6">
-      {/* Header */}
-      {/* <div className="flex items-center mb-6">
-        <ArrowLeft className="w-6 h-6 mr-2" />
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/ShopClues_Logo.svg/2560px-ShopClues_Logo.svg.png"
-          alt="Shopclues Logo"
-          className="h-5"
-        />
-      </div> */}
-
-      {/* Cart Items */}
       <h2 className="text-xl font-semibold mb-4">My Cart ( 1 Item )</h2>
       <div className="bg-white p-4 rounded shadow-sm flex flex-col gap-4">
         <div className="flex gap-4 items-start">
@@ -62,7 +51,7 @@ const CartPage = () => {
           <MapPin className="w-5 h-5 text-gray-600" />
           <p className="text-sm">
             Delivery pincode <br />
-            <span className="font-medium text-base">202411</span>{" "}
+            <span className="font-medium text-base">20911</span>{" "}
             <button className="text-blue-500 text-sm ml-2">Change</button>
           </p>
         </div>
@@ -78,7 +67,7 @@ const CartPage = () => {
         </div>
 
         <div className="flex justify-end mt-4">
-          <button className="bg-gradient-to-r from-orange-400 to-orange-600 text-white text-sm font-medium px-6 py-2 rounded">
+          <button className="bg-gradient-to-r from-orange-400 hover:cursor-pointer to-pink-500 text-white text-sm font-medium px-6 py-2 rounded">
             Place Order
           </button>
         </div>

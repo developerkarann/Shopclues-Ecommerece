@@ -1,6 +1,8 @@
+import { ArrowLeft, Minus, Plus, MapPin } from "lucide-react";
+import React from "react";
 
+const WishlistPage = () => {
 
-const MyWishlist = () => {
 
 
     const orders = [
@@ -52,17 +54,15 @@ const MyWishlist = () => {
             },
             paymentStatus: "Payment Pending",
         },
-        
+
     ];
 
 
-    return (
-        <>
 
-            <div>
-                <div className="mb-4 flex gap-4">
-                    <span className="pb-2 font-semibold">Wishlist</span>
-                </div>
+    return (
+        <div className="min-h-screen bg-[#f0f8fb] px-4 py-6">
+            <h2 className="text-xl font-semibold mb-4">My Wishlist ( 1 Item )</h2>
+            <div className="bg-white p-4 rounded shadow-sm flex flex-col gap-4">
                 {orders.map((order) => (
                     <div key={order.id} className="mb-6 pb-4 border-b border-gray-200  ">
 
@@ -85,7 +85,9 @@ const MyWishlist = () => {
                                 </div>
 
                                 <div className="flex flex-col gap-2 text-sm">
-                                    <button className="bg-gradient-to-r from-orange-400 hover:cursor-pointer rounded to-pink-500 text-white font-semibold px-3 py-2 shadow-md hover:opacity-90 transition">
+                                    <button 
+                                    className="bg-gradient-to-r from-orange-400 hover:cursor-pointer rounded to-pink-500 text-white font-semibold px-3 py-2 shadow-md hover:opacity-90 transition"
+                                    >
                                         Buy Now
                                     </button>
                                     <button className=" text-orange-400 border border-orange-400  hover:cursor-pointer rounded font-semibold px-6 py-2 shadow-md hover:opacity-90 transition">
@@ -97,12 +99,8 @@ const MyWishlist = () => {
                     </div>
                 ))}
             </div>
+        </div>
+    );
+};
 
-        </>
-    )
-}
-
-
-
-
-export default MyWishlist
+export default WishlistPage;
