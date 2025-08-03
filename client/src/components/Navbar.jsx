@@ -20,15 +20,15 @@ const Navbar = () => {
   const [typingTimeout, setTypingTimeout] = useState(null);
 
 
-    const keywordSuggestions = [
-    'Apple',
-    'Banana',
-    'Orange',
-    'Grapes',
-    'Pineapple',
-    'Mango',
-    'Blueberry',
-    'Strawberry',
+  const keywordSuggestions = [
+    "MOBILES & MORE",
+    "MEN",
+    "WOMEN",
+    "HOME & KITCHEN",
+    "APPLIANCES",
+    "SPORTS & MORE",
+    "OFFERS",
+    "GLOBAL SHOPPING",
   ];
 
   const handleInputChange = (e) => {
