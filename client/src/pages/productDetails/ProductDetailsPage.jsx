@@ -1,6 +1,38 @@
+import axios from "axios";
 import { Star, Heart, ShoppingCart, BadgeCheck, Truck, ArrowRight, ShieldCheck } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import { addToCart } from "../../redux/slices/cartSlice";
+import { toast } from "react-toastify";
 
 const ProductDetailsPage = () => {
+
+    const dispatch = useDispatch()
+
+    const [product, setProduct] = useState('')
+    const { id } = useParams()
+
+
+    const handleSearch = async () => {
+        try {
+            const resposne = await axios.get(`https://fakestoreapi.in/api/products/${id}`)
+            const { product } = resposne.data
+            setProduct(product)
+            // console.log(product)
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+    const handleAdd = () => {
+        dispatch(addToCart(product))
+        toast.success('Added to cart')
+    }
+    
+    useEffect(() => {
+        handleSearch()
+    }, [])
+
     return (
         <>
             <div className="bg-[#f1f7fc] p-6">
@@ -9,21 +41,21 @@ const ProductDetailsPage = () => {
                         {/* Product Image */}
                         <div className="flex justify-center">
                             <img
-                                src="https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=300&h=300&fit=crop"
-                                alt="USB Cable"
+                                // src="https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=300&h=300&fit=crop"
+                                src={product.image}
+                                alt={product.name}
                                 className="w-full h-full object-contain"
                             />
                         </div>
 
-                        {/* Product Details */}
                         <div>
                             <h2 className="text-lg font-medium">
-                                Digimate 3-in-1 Cable 0.29 m A3 Micro USB Cable 0.5 m Copper All in One 60W USB Fast Charging Cable Set
+                                {product.title}
                             </h2>
                             <p className="text-sm text-gray-500 mt-1">
-                                Compatible with Mobile, iPhone, Tablet, Black, One Cable
+                                {product.category}
                             </p>
-                            <p className="text-xs text-gray-400 mt-1">Product ID : 153554348</p>
+                            <p className="text-xs text-gray-400 mt-1">Product ID : {product.id}</p>
 
                             <div className="flex items-center gap-2 mt-2 text-sm">
                                 <span className="text-orange-500 font-medium">3.7</span>
@@ -32,37 +64,33 @@ const ProductDetailsPage = () => {
                                 <span className="text-cyan-600">43 Reviews</span>
                             </div>
 
-                            <div className="mt-3 text-2xl font-bold">₹199</div>
+                            <div className="mt-3 text-2xl font-bold">₹ {product.price}</div>
                             <div className="text-sm text-gray-500">
-                                MRP:<span className="line-through ml-1">₹999</span>
-                                <span className="text-green-600 ml-2 font-semibold">80% off</span>
+                                MRP:<span className="line-through ml-1">₹ {product.price + (product.price * product.discount / 100)}</span>
+                                <span className="text-green-600 ml-2 font-semibold"> {product.discount} % off</span>
                             </div>
                             <p className="text-xs text-gray-400 mt-1">Inclusive of all taxes</p>
 
-                            {/* Pricing Offer Box */}
+
                             <div className="border mt-4 rounded">
                                 <div className="p-2 border-b bg-gray-50 text-sm text-gray-700">
-                                    Get this for as low as: <span className="text-green-600 font-bold">₹196</span>
+                                    Get this for as low as: <span className="text-green-600 font-bold">₹ {product.price}</span>
                                 </div>
                                 <div className="p-2 text-xs text-gray-500">Applicable for All Users</div>
                                 <div className="flex justify-between px-4 py-2 text-sm">
                                     <div>
                                         <p>Original Price</p>
-                                        <p className="font-medium">₹199</p>
+                                        <p className="font-medium">₹  {product.price + (product.price * product.discount / 100)}</p>
                                     </div>
                                     <div>
-                                        <p>Apply Cluesbucks</p>
-                                        <p className="font-medium">-₹3</p>
+                                        <p>Apply Discount</p>
+                                        <p className="font-medium">-₹ {product.price * product.discount / 100}</p>
                                     </div>
                                     <div>
                                         <p>Deal Price</p>
-                                        <p className="text-green-600 font-bold">₹196</p>
+                                        <p className="text-green-600 font-bold">₹ {product.price}</p>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div className="text-xs text-blue-500 mt-2">
-                                Extra CluesBucks™ only on VIP Club. <span className="underline">Join Now</span>
                             </div>
 
                             <div className="text-sm text-gray-600 mt-2">
@@ -74,9 +102,9 @@ const ProductDetailsPage = () => {
                                 </p>
                             </div>
 
-                            {/* Buttons */}
+
                             <div className="flex gap-4 mt-4">
-                                <button className="bg-orange-500 text-white px-6 py-2 rounded hover:bg-orange-600">
+                                <button onClick={ handleAdd } className="bg-orange-500 text-white px-6 py-2 rounded hover:bg-orange-600">
                                     ADD TO CART
                                 </button>
                                 <button className="bg-[#ff5722] text-white px-6 py-2 rounded hover:bg-[#e64a19]">
@@ -84,7 +112,7 @@ const ProductDetailsPage = () => {
                                 </button>
                             </div>
 
-                            {/* Pincode */}
+
                             <div className="flex items-center gap-2 mt-4">
                                 <input
                                     type="text"
@@ -96,7 +124,7 @@ const ProductDetailsPage = () => {
                                 </button>
                             </div>
 
-                            {/* Shipping info */}
+
                             <div className="mt-4 text-sm text-gray-600 space-y-2">
                                 <p className="flex items-center gap-2">
                                     <Truck className="w-4 h-4 text-red-500" /> COD Not Available
@@ -109,6 +137,12 @@ const ProductDetailsPage = () => {
                                 </p>
                                 <p className="text-xs text-gray-400">
                                     Payment Options: Credit Card, Debit Card, Net Banking, Wallets
+                                </p>
+                                <p className="text-sm text-gray-900 mt-4">
+                                    Product Description:
+                                </p>
+                                <p className="text-sm text-gray-500 mt-1">
+                                    {product.description}
                                 </p>
                             </div>
                         </div>

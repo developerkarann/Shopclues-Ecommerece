@@ -7,17 +7,17 @@ import {
   MapPin
 } from "lucide-react";
 import MainNavLinks from "@/ui/MainNavLinks";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AcccountSidebar from "@/ui/AccountSidebar";
 import HoverCard from "@/ui/HoverCart";
 import HoverWishlist from "@/ui/HoverWishlist";
 import MobileNavbar from "./MobileNavbar";
+import { useSelector } from "react-redux";
 
-const Navbar = () => {
+const Navbar = ({ searchTerm, setSearchTerm }) => {
 
-  const [query, setQuery] = useState('');
-  const [suggestions, setSuggestions] = useState([]);
-  const [typingTimeout, setTypingTimeout] = useState(null);
+  const wishlist = useSelector((state) => state.wishlist)
+  const navigate = useNavigate()
 
 
   const keywordSuggestions = [
@@ -31,33 +31,6 @@ const Navbar = () => {
     "GLOBAL SHOPPING",
   ];
 
-  const handleInputChange = (e) => {
-    const value = e.target.value;
-    setQuery(value);
-
-    // Clear any previous timeout
-    if (typingTimeout) clearTimeout(typingTimeout);
-
-    // Set a new timeout to simulate debounce (300ms)
-    const timeout = setTimeout(() => {
-      if (value.trim() !== '') {
-        const filtered = keywordSuggestions.filter((item) =>
-          item.toLowerCase().includes(value.toLowerCase())
-        );
-        setSuggestions(filtered);
-      } else {
-        setSuggestions([]);
-      }
-    }, 300);
-
-    setTypingTimeout(timeout);
-  };
-
-
-  const handleSuggestionClick = (value) => {
-    setQuery(value);
-    setSuggestions([]);
-  };
 
 
   const subNav = [
@@ -99,6 +72,21 @@ const Navbar = () => {
     },
   ]
 
+  const manNav = [
+    "Gaming",
+    "Audio",
+    "Mobile",
+    "TV"
+  ]
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+
+    if (searchTerm.trim()) {
+      // navigate(`/search?query=${(searchInput.trim())}`);
+      navigate(`/products/${searchTerm.trim()}`);
+    }
+  };
 
   return (
     <>
@@ -139,35 +127,23 @@ const Navbar = () => {
 
             {/* Search Bar */}
             <div className="flex-1 relative max-w-2xl mx-4 hidden md:block ">
-              <div className="flex rounded overflow-hidden ">
-                <div className="flex items-center px-3 bg-[#eaf7fb]">
-                  <Search className="text-gray-500 w-4 h-4" />
+              <form onSubmit={handleSearch}>
+                <div className="flex rounded overflow-hidden ">
+                  <div className="flex items-center px-3 bg-[#eaf7fb]">
+                    <Search className="text-gray-500 w-4 h-4" />
+                  </div>
+                  <input
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    type="text"
+                    placeholder="What is on your mind today?"
+                    className="flex-1 px-3 py-2 bg-[#eaf7fb] outline-none"
+                  />
+                  <button type="submit" className="bg-gradient-to-r from-orange-400 to-pink-500 text-white font-semibold px-8 py-3 shadow-md hover:opacity-90 transition">
+                    Search
+                  </button>
                 </div>
-                <input
-                  value={query}
-                  onChange={handleInputChange}
-                  type="text"
-                  placeholder="What is on your mind today?"
-                  className="flex-1 px-3 py-2 bg-[#eaf7fb] outline-none"
-                />
-                <button className="bg-gradient-to-r from-orange-400 to-pink-500 text-white font-semibold px-8 py-3 shadow-md hover:opacity-90 transition">
-                  Search
-                </button>
-              </div>
-
-              {suggestions.length > 0 && (
-                <ul className="absolute w-full bg-white rounded-b shadow-2xl z-10">
-                  {suggestions.map((item, idx) => (
-                    <li
-                      key={idx}
-                      onClick={() => handleSuggestionClick(item)}
-                      className="px-4 py-2 cursor-pointer hover:bg-blue-100"
-                    >
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              )}
+              </form>
             </div>
 
 
@@ -206,7 +182,19 @@ const Navbar = () => {
           </div>
 
           {/* Main Nav */}
-          <MainNavLinks />
+          <div className="bg-cyan-600 text-white  text-base flex ">
+            <div className=" max-w-7xl mx-auto px-4 py-2 flex space-x-5">
+              <Link to={`/products`}  >
+                <span className="hover:cursor-pointer">All Product</span>
+              </Link>
+              {manNav.map((nav, i) => (
+                <Link to={`/products/${nav.toLocaleLowerCase()}`} key={i} >
+                  <span className="hover:cursor-pointer">{nav}</span>
+                </Link>
+              ))}
+            </div>
+
+          </div>
 
 
           {/* Sub Nav */}
@@ -215,7 +203,7 @@ const Navbar = () => {
 
               {
                 subNav.map((nav) => (
-                  <Link to={`/category/${nav.link}`}>
+                  <Link to={`/products/${nav.link}`}>
                     <span className="cursor-pointer">{nav.nav}</span>
                   </Link>
                 ))

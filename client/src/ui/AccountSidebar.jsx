@@ -23,11 +23,12 @@ const AcccountSidebar = () => {
                 <aside className="w-full md:w-64 h-[400px] border-r-8 border-gray-50 p-4">
                     <h2 className="text-xl text-cyan-600 font-bold mb-4">My Account</h2>
                     <nav className="space-y-4">
-                        {tabs.map((tab) => (
+                        {tabs.map((tab,i) => (
                             <button
+                            key={i}
                                 className={`flex items-center justify-between w-full text-left px-2 py-1 rounded hover:cursor-pointer font-semibold`}
                             >
-                                <Link to='account' className="">
+                                <Link to='/account'>
                                     <div className="flex items-center gap-2 text-gray-700">
                                         {tab.icon}
                                         <span className="text-gray-600">{tab.key}</span>

@@ -6,17 +6,13 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-const CategoryPage = ({ searchTerm }) => {
+const AllProductsPages = ({ searchTerm }) => {
 
-  const productsData = useSelector((state) => state.products.data)
+  const products = useSelector((state) => state.products.data)
   const dispatch = useDispatch()
-  const { cat } = useParams()
-
 
   const [currentPage, setCurrentPage] = useState(1);
-  const productsPerPage = 10; 
-
-
+  const productsPerPage = 10; // You can change this
 
 
   // console.log(productsData)
@@ -24,14 +20,8 @@ const CategoryPage = ({ searchTerm }) => {
     dispatch(fetchProducts())
   }, [])
 
-  const products = productsData.filter((item) => {
-    if (cat) {
-      return item.category.toLowerCase().includes(cat)
-    } else {
-      return item
-    }
-  })
 
+  // Pagination logic
   const totalPages = Math.ceil(products.length / productsPerPage);
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
@@ -49,7 +39,7 @@ const CategoryPage = ({ searchTerm }) => {
   return (
     <div className="min-h-screen bg-[#f0f8fb] p-4 md:p-6">
       {
-        products.length > 0 ?
+        filteredProducts.length > 0 ?
           <>
             <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
               {/* Sidebar Filters */}
@@ -93,7 +83,7 @@ const CategoryPage = ({ searchTerm }) => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {filteredProducts.map((product) => (
-                    <ProductCard product={product}/>
+                    <ProductCard product={product} />
                   ))}
                 </div>
                 {/* Pagination */}
@@ -132,11 +122,11 @@ const CategoryPage = ({ searchTerm }) => {
           </>
           :
           <>
-            <NotFound text={'No products found'}/>
+            <NotFound text={'No Products Found'}/>
           </>
       }
     </div>
   );
 };
 
-export default CategoryPage;
+export default AllProductsPages;
