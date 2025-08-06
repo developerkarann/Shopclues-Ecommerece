@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { toggleWishlist } from "../redux/slices/wishlistSlice";
 import { Link } from "react-router-dom";
+import WishlistCard from "@/components/WishlistCard";
 
 
 const HoverWishlist = () => {
@@ -76,42 +77,8 @@ const HoverWishlist = () => {
                         </div>
                     </>
                         :
-                        wishlist.map((item, i) => (
-                            <div key={i} className="mb-6 pb-4 border-b border-gray-200  ">
-
-                                {item && (
-                                    <div className="flex  justify-between gap-4  ">
-                                        <div className="flex gap-5">
-                                            <img src={item.image} alt="Product" className="w-30 h-30 " />
-                                            <div>
-                                                <p className="text-sm font-medium">
-                                                    {item.title.slice(0, 70)}
-                                                </p>
-                                                {/* <p className="mt-2 text-gray-600  line-through  text-sm">
-                                            ₹{order.product.price}
-                                        </p> */}
-                                                <p className="mt-2 font-bold text-sm">
-                                                    ₹{item.price}
-                                                </p>
-                                            </div>
-
-                                        </div>
-
-                                        <div className="flex flex-col gap-2 text-sm">
-                                            <button className="bg-gradient-to-r from-orange-400 hover:cursor-pointer rounded to-pink-500 text-white font-semibold px-2 py-2 shadow-md hover:opacity-90 transition">
-                                                <Link to={`/product/${item.id}`}>
-                                                    Buy Now
-                                                </Link>
-                                            </button>
-                                            <button
-                                                onClick={() => dispatch(toggleWishlist(item))}
-                                                className=" text-orange-400 border border-orange-400  hover:cursor-pointer rounded font-semibold px-6 py-2 shadow-md hover:opacity-90 transition">
-                                                Remove
-                                            </button>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
+                        wishlist.map((product, i) => (
+                            <WishlistCard key={i} product={product} />
                         ))}
             </div>
         </>

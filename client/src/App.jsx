@@ -29,12 +29,10 @@ function App() {
           <Route path='/product/:id' element={<ProductDetailsPage />} />
           <Route path='/cart' element={<CartPage />} />
           <Route path='/products/:cat' element={<CategoryPage searchTerm={searchTerm} />} />
-          <Route path='/checkout' element={<CheckoutPage />} />
-          <Route path='/payment' element={<PaymentPage />} />
           <Route path='/login' element={<AuthenticationPage />} />
           <Route path={'/account'} element={<Dashboard />} />
           <Route path={'/wishlist'} element={<WishlistPage />} />
-          <Route path={'/products'} element={<AllProductsPages searchTerm={searchTerm} />} />
+          <Route path={'/products'} element={<CategoryPage searchTerm={searchTerm} />} />
         </Routes>
         <Footer />
 

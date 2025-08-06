@@ -7,20 +7,25 @@ import {
 import { useState } from "react";
 import MyOrders from "./MyOrders";
 import MyWishlist from "./MyWishlist";
+import MyCart from "./MyCart";
+import { useSelector } from "react-redux";
 
-const tabs = [
-  { key: "Orders", icon: <Home size={18} />, label: "My Orders" },
-  // { key: "Bucks", icon: <ShoppingCart size={18} />, label: "My Clues Bucks", badge: 0 },
-  // { key: "BucksStar", icon: <ShoppingCart size={18} />, label: "My Clues Bucks*", badge: 0 },
-  { key: "Profile", icon: <User size={18} />, label: "My Profile" },
-  // { key: "Rate", icon: <Star size={18} />, label: "Rate Your Purchase" },
-  { key: "Wishlist", icon: <Heart size={18} />, label: "My Wishlist", badge: 1 },
-  // { key: "Stores", icon: <Store size={18} />, label: "My Favorite Stores" },
-  { key: "Support", icon: <HelpCircle size={18} />, label: "Help & Support" },
-];
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("Orders");
+
+  const cart = useSelector((state) => state.cart);
+
+  const wishlist = useSelector((state) => state.wishlist)
+
+
+  const tabs = [
+    { key: "Orders", icon: <Home size={18} />, label: "My Orders" },
+    { key: "Profile", icon: <User size={18} />, label: "My Profile" },
+    { key: "Wishlist", icon: <Heart size={18} />, label: "My Wishlist", badge: wishlist.length, },
+    { key: "Cart", icon: <Heart size={18} />, label: "My Cart", badge: cart.length },
+    { key: "Support", icon: <HelpCircle size={18} />, label: "Help & Support", },
+  ];
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-8">
@@ -28,7 +33,7 @@ export default function Dashboard() {
         {/* Sidebar */}
         <aside className="w-full md:w-64 h-[400px] border-r-8 border-gray-50 p-4">
           <h2 className="text-xl text-cyan-600 font-bold mb-4">My Account</h2>
-         
+
           <nav className="space-y-4">
             {tabs.map((tab) => (
               <NavItem
@@ -46,20 +51,22 @@ export default function Dashboard() {
         {/* Main content */}
         <main className="flex-1 p-4">
           {activeTab === "Orders" && (
-             <MyOrders/>
+            <MyOrders />
           )}
 
           {activeTab === "Wishlist" && (
-        
-              <MyWishlist/>
-   
+            <MyWishlist />
+          )}
+          {activeTab === "Cart" && (
+            <MyCart />
+          )}
+          {activeTab === "Support" && (
+            'Support Section'
+          )}
+          {activeTab === "Profile" && (
+            "Profile Section"
           )}
 
-          {activeTab !== "Orders" && (
-            <div className="text-gray-600 text-center mt-10 text-lg">
-              {tabs.find((t) => t.key === activeTab)?.label}
-            </div>
-          )}
         </main>
       </div>
     </div>

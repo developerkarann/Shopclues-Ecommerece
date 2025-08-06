@@ -17,20 +17,9 @@ import { useSelector } from "react-redux";
 const Navbar = ({ searchTerm, setSearchTerm }) => {
 
   const wishlist = useSelector((state) => state.wishlist)
+  const cart = useSelector((state) => state.cart);
+
   const navigate = useNavigate()
-
-
-  const keywordSuggestions = [
-    "MOBILES & MORE",
-    "MEN",
-    "WOMEN",
-    "HOME & KITCHEN",
-    "APPLIANCES",
-    "SPORTS & MORE",
-    "OFFERS",
-    "GLOBAL SHOPPING",
-  ];
-
 
 
   const subNav = [
@@ -83,7 +72,6 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
     e.preventDefault();
 
     if (searchTerm.trim()) {
-      // navigate(`/search?query=${(searchInput.trim())}`);
       navigate(`/products/${searchTerm.trim()}`);
     }
   };
@@ -160,13 +148,29 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
                 <Bell />
 
                 <div className="relative group">
-                  <Link to='/account'>  <Heart /> </Link>
+                  {/* <Link to='/wishlist'>  <Heart /> </Link> */}
+
+                  <Link to="/wishlist" className="relative inline-block">
+                    <Heart className="w-6 h-6 text-gray-700" />
+
+                    {wishlist.length > 0 && (
+                      <span className="absolute -top-2 -right-3 bg-cyan-600 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                        {wishlist.length}
+                      </span>
+                    )}
+                  </Link>
                   <HoverWishlist />
                 </div>
 
                 <div className="relative group">
-                  <Link to="/cart">
-                    <ShoppingCart />
+                  <Link to="/cart" className="relative inline-block">
+                    <ShoppingCart className="w-6 h-6 text-gray-700" />
+
+                    {cart.length > 0 && (
+                      <span className="absolute -top-2 -right-3 bg-cyan-600 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                        {cart.length}
+                      </span>
+                    )}
                   </Link>
                   <HoverCard />
                 </div>

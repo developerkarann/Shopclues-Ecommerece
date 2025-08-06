@@ -1,10 +1,8 @@
 import NotFound from "@/components/NotFound";
 import ProductCard from "@/components/ProductCard";
 import { fetchProducts } from "@/redux/slices/productSlice";
-import { Heart } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 
 const AllProductsPages = ({ searchTerm }) => {
 
@@ -12,7 +10,7 @@ const AllProductsPages = ({ searchTerm }) => {
   const dispatch = useDispatch()
 
   const [currentPage, setCurrentPage] = useState(1);
-  const productsPerPage = 10; // You can change this
+  const productsPerPage = 20; // You can change this
 
 
   // console.log(productsData)
@@ -43,8 +41,7 @@ const AllProductsPages = ({ searchTerm }) => {
           <>
             <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
               {/* Sidebar Filters */}
-              <aside className="md:col-span-1 bg-white p-4 rounded shadow-sm h-60 md:h-full">
-                {/* Price Filter */}
+              {/* <aside className="md:col-span-1 bg-white p-4 rounded shadow-sm h-60 md:h-full">
                 <div className="mb-4">
                   <h3 className="font-semibold mb-1">
                     Price <span className="text-blue-500 text-sm ml-2 cursor-pointer">Clear All</span>
@@ -59,7 +56,6 @@ const AllProductsPages = ({ searchTerm }) => {
                   </div>
                 </div>
 
-                {/* Color Filter */}
                 <div>
                   <h3 className="font-semibold mb-1">
                     Color <span className="text-blue-500 text-sm ml-2 cursor-pointer">Clear All</span>
@@ -74,14 +70,14 @@ const AllProductsPages = ({ searchTerm }) => {
                     ))}
                   </div>
                 </div>
-              </aside>
+              </aside> */}
 
               {/* Product List */}
-              <main className="md:col-span-4">
+              <main className="md:col-span-5">
 
                 <p className="text-sm text-gray-500 mb-4">{filteredProducts.length} Products Found</p>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                   {filteredProducts.map((product) => (
                     <ProductCard product={product} />
                   ))}

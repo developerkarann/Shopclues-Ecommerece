@@ -81,10 +81,17 @@ export default function AuthenticationPage({ onClose }) {
               <div className="relative">
                 <input
                   type="text"
-                  name="login-credential"
-                  id="login-credential"
+                  name="email"
+                  id="email"
                   placeholder="Enter your mobile number or email id"
                   className="block w-full appearance-none border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-orange-500 px-1 py-2 placeholder-gray-400"
+                />
+                <input
+                  type="text"
+                  name="password"
+                  id="password"
+                  placeholder="Enter your password"
+                  className="block w-full mt-5 appearance-none border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-orange-500 px-1 py-2 placeholder-gray-400"
                 />
               </div>
               <button
