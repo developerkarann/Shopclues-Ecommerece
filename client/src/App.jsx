@@ -7,9 +7,7 @@ import HomePage from './pages/home/HomePage'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import ProductDetailsPage from './pages/productDetails/ProductDetailsPage'
 import CartPage from './pages/cart/CartPage'
-
 import AuthenticationPage from './pages/Authentication/AuthenticationPage'
-import Dashboard from './pages/Dashboard/Dashboard'
 import WishlistPage from './pages/wishlist/Wishlist'
 import ProductsPage from './pages/Products/ProductsPage'
 
@@ -29,7 +27,6 @@ function App() {
           <Route path='/cart' element={<CartPage />} />
           <Route path='/products/:cat' element={<ProductsPage searchTerm={searchTerm} />} />
           <Route path='/login' element={<AuthenticationPage />} />
-          <Route path={'/account'} element={<Dashboard />} />
           <Route path={'/wishlist'} element={<WishlistPage />} />
           <Route path={'/products'} element={<ProductsPage searchTerm={searchTerm} />} />
         </Routes>
