@@ -3,9 +3,9 @@ import { ArrowRight, Heart } from "lucide-react";
 import ProductCard from "../../components/ProductCard";
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import { Link } from "react-router-dom";
-import { fetchProducts } from "@/redux/slices/productSlice";
+import { fetchProducts } from "../../redux/slices/productSlice";
 import { useDispatch, useSelector } from "react-redux";
-import Loader from "@/components/Loader";
+import Loader from "../../components/Loader";
 
 const HomePage = ({ searchTerm }) => {
   const dispatch = useDispatch()
@@ -27,7 +27,7 @@ const HomePage = ({ searchTerm }) => {
   ]
 
   return (
-    <div className="font-sans text-gray-800 overflow-x-hidden bg-[#f1f7fc] min-h-screen pb-20 ">
+    <div className="font-sans text-gray-800 overflow-x-hidden bg-[#f1f7fc] min-h-screen pb-20 py-38">
       {/* Hero Banner */}
       <div className="max-w-7xl  mx-auto  px-4 py-4 grid grid-cols-4 gap-10">
         <div className="col-span-3 bg-white h-86 rounded shadow-sm" >
@@ -40,12 +40,12 @@ const HomePage = ({ searchTerm }) => {
             productsData.slice(0, 3).map((item, i) => (
               <div className="item flex flex-col max-h-35 p-2 justify-center items-center" key={i}>
                 <img
-                  className="h-20 w-10"
+                  className="h-20 w-20"
                   src={item.image} alt={item.title} />
                 <p className="cat text-sm mt-[-4px]">{item?.title?.slice(0, 15)}...</p>
                 <p className="title font-bold mt-[-6px]">
                   <Link to={`/product/${item.id}`}>
-                    Shop Nowx
+                    Shop Now
                   </Link>
                 </p>
               </div>
@@ -76,7 +76,7 @@ const HomePage = ({ searchTerm }) => {
 
               <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-6">
                 {
-                  productsData.slice(0, 5).map((product, i) => (
+                  filteredProducts.slice(0, 5).map((product, i) => (
                     <ProductCard product={product} key={i} />
                   ))}
               </div>
@@ -85,7 +85,7 @@ const HomePage = ({ searchTerm }) => {
 
             {
               productCategory.map((category, index) => (
-                <SectionBlock key={index} category={category} />
+                <SectionBlock key={index} category={category} searchTerm={searchTerm} />
               ))}
           </div>
       }
@@ -93,7 +93,7 @@ const HomePage = ({ searchTerm }) => {
   );
 };
 
-const SectionBlock = ({ category }) => {
+const SectionBlock = ({ category, searchTerm }) => {
 
   const productsData = useSelector((state) => state.products.data)
 
@@ -103,6 +103,10 @@ const SectionBlock = ({ category }) => {
 
   const catProduct = [...products]
 
+
+  const filteredProducts = catProduct.filter((product) =>
+    product.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <section className="space-y-4">
@@ -121,9 +125,10 @@ const SectionBlock = ({ category }) => {
       {category && (
 
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-          {catProduct.slice(0, 5).map((product) => (
-            <ProductCard product={product} />
-          ))}
+          {
+            filteredProducts.slice(0, 5).map((product) => (
+              <ProductCard product={product} />
+            ))}
         </div>
 
       )}

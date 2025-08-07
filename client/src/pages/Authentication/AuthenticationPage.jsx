@@ -1,19 +1,17 @@
-import React, { useState } from "react";
 import {
-  X,
-  ShoppingCart,
-  CheckCircle2,
   CreditCard,
-  Percent,
   Facebook,
+  Percent,
+  ShoppingCart
 } from "lucide-react";
+import { useState } from "react";
 
-export default function AuthenticationPage({ onClose }) {
-  const [activeTab, setActiveTab] = useState("login"); // 'login' or 'register'
+export default function AuthenticationPage() {
+  const [activeTab, setActiveTab] = useState("login");
   
 
   return (
-    <div className="flex justify-center items-center px-4 py-6 z-50">
+    <div className="flex justify-center items-center px-4 py-45 z-50">
       <div className="bg-white rounded-md shadow-lg w-full max-w-4xl flex flex-col md:flex-row relative">
         {/* Left Side Info Panel */}
         <div className="bg-gray-50 md:w-80 p-8 flex flex-col space-y-10 text-center text-gray-600">
@@ -42,15 +40,6 @@ export default function AuthenticationPage({ onClose }) {
 
         {/* Right Side Form Panel */}
         <div className="flex-1 p-8 relative">
-          {/* Close button */}
-          {/* <button
-            aria-label="Close Modal"
-            onClick={onClose}
-            className="absolute right-4 top-4 text-gray-600 hover:text-gray-900 transition"
-          >
-            <X className="w-6 h-6" />
-          </button> */}
-
           {/* Tabs */}
           <div className="border-b border-gray-200 mb-6 flex space-x-6">
             <button

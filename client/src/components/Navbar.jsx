@@ -6,11 +6,11 @@ import {
   Heart,
   MapPin
 } from "lucide-react";
-import MainNavLinks from "@/ui/MainNavLinks";
+import MainNavLinks from "../ui/MainNavLinks";
 import { Link, useNavigate } from "react-router-dom";
-import AcccountSidebar from "@/ui/AccountSidebar";
-import HoverCard from "@/ui/HoverCart";
-import HoverWishlist from "@/ui/HoverWishlist";
+import AcccountSidebar from "../ui/AccountSidebar";
+import HoverCard from "../ui/HoverCart";
+import HoverWishlist from "../ui/HoverWishlist";
 import MobileNavbar from "./MobileNavbar";
 import { useSelector } from "react-redux";
 
@@ -68,20 +68,14 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
     "TV"
   ]
 
-  const handleSearch = (e) => {
-    e.preventDefault();
 
-    if (searchTerm.trim()) {
-      navigate(`/products/${searchTerm.trim()}`);
-    }
-  };
 
   return (
     <>
-      <MobileNavbar />
+      <MobileNavbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
 
-      <div className="font-sans text-gray-800 hidden md:block">
+      <div className="font-sans text-gray-800 hidden md:block fixed w-full bg-white z-50">
         <div className="topHeader flex justify-between ">
           <div></div>
           <div className="flex gap-6 pt-2 px-4">
@@ -115,7 +109,7 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
 
             {/* Search Bar */}
             <div className="flex-1 relative max-w-2xl mx-4 hidden md:block ">
-              <form onSubmit={handleSearch}>
+         
                 <div className="flex rounded overflow-hidden ">
                   <div className="flex items-center px-3 bg-[#eaf7fb]">
                     <Search className="text-gray-500 w-4 h-4" />
@@ -131,7 +125,7 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
                     Search
                   </button>
                 </div>
-              </form>
+           
             </div>
 
 

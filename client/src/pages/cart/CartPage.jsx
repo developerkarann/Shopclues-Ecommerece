@@ -1,8 +1,7 @@
-import CartCard from "@/components/CartCard";
-import NotFound from "@/components/NotFound";
-import { ArrowLeft, Minus, Plus, MapPin } from "lucide-react";
-import React, { useState } from "react";
+import { MapPin } from "lucide-react";
 import { useSelector } from "react-redux";
+import CartCard from "../../components/CartCard";
+import NotFound from "../../components/NotFound";
 
 const CartPage = () => {
 

@@ -1,23 +1,26 @@
 import {
+    ArrowLeft,
     Heart,
+    MenuIcon,
     Search,
     ShoppingCart,
-    MenuIcon,
     UserRound,
-    X,
-    MoveLeft,
-    ArrowLeft
+    X
 } from "lucide-react";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const MobileNavbar = () => {
+const MobileNavbar = ({ searchTerm, setSearchTerm }) => {
 
-    const [query, setQuery] = useState('');
-    const [suggestions, setSuggestions] = useState([]);
-    const [typingTimeout, setTypingTimeout] = useState(null);
+
+    const wishlist = useSelector((state) => state.wishlist)
+    const cart = useSelector((state) => state.cart);
+
     const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+    const navigate = useNavigate()
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen)
@@ -27,58 +30,26 @@ const MobileNavbar = () => {
     }
 
     const navItems = [
-        { name: 'Home', href: '#home' },
-        { name: 'About', href: '#about' },
-        { name: 'Projects', href: '#projects' },
-        { name: 'Skills', href: '#skills' },
-        { name: 'Contact', href: '#contact' }
+        { name: 'HOME', href: '/' },
+        { name: 'PRODUCTS', href: '/products' },
+        { name: 'VIEW CART', href: '/cart' },
+        { name: 'VIEW WISHLIST', href: '/wishlist' },
+        { name: 'LOGIN', href: '/login' }
     ];
 
 
+    const handleSearch = (e) => {
+        e.preventDefault();
 
-    const keywordSuggestions = [
-        "MOBILES & MORE",
-        "MEN",
-        "WOMEN",
-        "HOME & KITCHEN",
-        "APPLIANCES",
-        "SPORTS & MORE",
-        "OFFERS",
-        "GLOBAL SHOPPING",
-    ];
-
-    const handleInputChange = (e) => {
-        const value = e.target.value;
-        setQuery(value);
-
-        // Clear any previous timeout
-        if (typingTimeout) clearTimeout(typingTimeout);
-
-        // Set a new timeout to simulate debounce (300ms)
-        const timeout = setTimeout(() => {
-            if (value.trim() !== '') {
-                const filtered = keywordSuggestions.filter((item) =>
-                    item.toLowerCase().includes(value.toLowerCase())
-                );
-                setSuggestions(filtered);
-            } else {
-                setSuggestions([]);
-            }
-        }, 300);
-
-        setTypingTimeout(timeout);
-    };
-
-
-    const handleSuggestionClick = (value) => {
-        setQuery(value);
-        setSuggestions([]);
+        if (searchTerm.trim()) {
+            navigate(`/products/${searchTerm.trim()}`);
+        }
     };
 
 
     return (
         <>
-            <div className="font-sans text-gray-800 block md:hidden">
+            <div className="font-sans text-gray-800 block md:hidden fixed w-full bg-white z-50">
                 <header className="bg-white shadow-sm text-sm pb-3">
                     <div className="mobile-nav w-full  ">
                         <div className="top-section flex justify-between items-center mb-2">
@@ -104,20 +75,39 @@ const MobileNavbar = () => {
                             </div>
 
 
-                            <div className="flex items-center space-x-4 text-cyan-700 gap-2 ">
+                            <div className="flex items-center space-x-4 text-cyan-700 gap-2 pr-6 ">
 
                                 <div className="flex items-center space-x-4 text-cyan-700 gap-2 pt-3 ">
 
-                                    <div className="relative group">
-                                        <Link to='/account'>  <Heart /> </Link>
-
-                                    </div>
 
                                     <div className="relative group">
-                                        <Link to="/cart">
-                                            <ShoppingCart />
+                                        {/* <Link to='/wishlist'>  <Heart /> </Link> */}
+
+                                        <Link to="/wishlist" className="relative inline-block">
+                                            <Heart className="w-6 h-6 text-gray-700" />
+
+                                            {wishlist.length > 0 && (
+                                                <span className="absolute -top-2 -right-3 bg-cyan-600 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                                                    {wishlist.length}
+                                                </span>
+                                            )}
                                         </Link>
+                                   
                                     </div>
+
+                                    <div className="relative group">
+                                        <Link to="/cart" className="relative inline-block">
+                                            <ShoppingCart className="w-6 h-6 text-gray-700" />
+
+                                            {cart.length > 0 && (
+                                                <span className="absolute -top-2 -right-3 bg-cyan-600 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                                                    {cart.length}
+                                                </span>
+                                            )}
+                                        </Link>
+                                
+                                    </div>
+
                                     <Link to="/login" >
                                         <UserRound />
                                     </Link>
@@ -132,8 +122,8 @@ const MobileNavbar = () => {
                                         <Search className="text-gray-500 w-4 h-4" />
                                     </div>
                                     <input
-                                        value={query}
-                                        onChange={handleInputChange}
+                                        value={searchTerm}
+                                        onChange={(e) => setSearchTerm(e.target.value)}
                                         type="text"
                                         placeholder="What is on your mind today?"
                                         className="flex-1 px-3 py-2 bg-[#eaf7fb] outline-none"
@@ -144,19 +134,7 @@ const MobileNavbar = () => {
                                 </div>
                             </div>
 
-                            {suggestions.length > 0 && (
-                                <ul className="absolute w-full bg-white rounded-b shadow-2xl z-10 py-5">
-                                    {suggestions.map((item, idx) => (
-                                        <li
-                                            key={idx}
-                                            onClick={() => handleSuggestionClick(item)}
-                                            className="px-4 py-2 cursor-pointer hover:bg-blue-100"
-                                        >
-                                            {item}
-                                        </li>
-                                    ))}
-                                </ul>
-                            )}
+
                         </div>
                     </div>
 
@@ -193,51 +171,20 @@ const MobileNavbar = () => {
                                 {/* Navigation Items */}
                                 <div className="flex-1 px-4 py-8">
                                     <div className="space-y-6 text-black">
-                                        <div className="relative group">
-                                            <span className="hover:cursor-pointer">MOBILES & MORE</span>
-                                            {/* Subtabs  */}
-
+                                        <div className="flex flex-col gap-10  text-base" >
+                                            {
+                                                navItems.map((item) => (
+                                                    <Link to={item.href} onClick={closeMenu} >{item.name} </Link>
+                                                ))
+                                            }
                                         </div>
-
-                                        <div className="relative group">
-                                            <span className="hover:cursor-pointer">MEN</span>
-
-                                        </div>
-                                        <div className="relative group">
-                                            <span className="hover:cursor-pointer">WOMEN</span>
-
-                                        </div>
-                                        <div className="relative group">
-                                            <span className="hover:cursor-pointer">HOME & KITCHEN</span>
-
-                                        </div>
-                                        <div className="relative group">
-                                            <span className="hover:cursor-pointer">APPLIANCES</span>
-
-                                        </div>
-                                        <div className="relative group">
-                                            <span className="hover:cursor-pointer">SPORTS & MORE</span>
-
-                                        </div>
-                                        <div className="relative group">
-
-                                        </div>
-                                        <div className="relative group">
-                                            <span className="hover:cursor-pointer">OFFERS</span>
-
-                                        </div>
-                                        <div className="relative group">
-                                            <span className="hover:cursor-pointer">GLOBAL SHOPPING</span>
-
-                                        </div>
-
                                     </div>
                                 </div>
 
                                 {/* Footer */}
                                 <div className="px-4 py-6 border-t border-purple-500/30">
                                     <div className="text-center text-gray-400 text-sm">
-                                        © 2025 Karanpal.in
+                                        © 2025 Shopclues.com
                                     </div>
                                 </div>
                             </div>

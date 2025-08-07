@@ -28,7 +28,7 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 md:p-8">
+    <div className="min-h-screen bg-gray-50 p-4 py-45 md:p-8">
       <div className="flex flex-col md:flex-row bg-white shadow rounded-xl overflow-hidden gap-4">
         {/* Sidebar */}
         <aside className="w-full md:w-64 h-[400px] border-r-8 border-gray-50 p-4">

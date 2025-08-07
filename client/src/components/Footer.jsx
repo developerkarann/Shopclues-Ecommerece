@@ -1,5 +1,4 @@
-import { IndianRupee, Shield, ShoppingCart } from 'lucide-react'
-import React from 'react'
+import { IndianRupee, Shield, ShoppingCart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {

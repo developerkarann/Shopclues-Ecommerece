@@ -1,17 +1,19 @@
-import Loader from "@/components/Loader";
-import NotFound from "@/components/NotFound";
-import ProductCard from "@/components/ProductCard";
-import { fetchProducts } from "@/redux/slices/productSlice";
-import { Heart } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import Loader from "../../components/Loader";
+import NotFound from "../../components/NotFound";
+import ProductCard from "../../components/ProductCard";
+import { fetchProducts } from "../../redux/slices/productSlice";
 
-const CategoryPage = ({ searchTerm }) => {
+
+const ProductsPage = ({ searchTerm }) => {
 
   const productsData = useSelector((state) => state.products.data)
   const dispatch = useDispatch()
   const { cat } = useParams()
+
+
 
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -48,49 +50,17 @@ const CategoryPage = ({ searchTerm }) => {
   );
 
   return (
-    <div className="min-h-screen bg-[#f0f8fb] p-4 md:p-6">
+    <div className="min-h-screen bg-[#f0f8fb] p-7 pt-45">
       {
         products.length > 0 ?
           <>
             <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-              {/* Sidebar Filters */}
-              {/* <aside className="md:col-span-1 bg-white p-4 rounded shadow-sm h-60 md:h-full">
-                <div className="mb-4">
-                  <h3 className="font-semibold mb-1">
-                    Price <span className="text-blue-500 text-sm ml-2 cursor-pointer">Clear All</span>
-                  </h3>
-                  <div className="text-sm text-gray-700 space-y-1">
-                    {['Rs. 499 and Below', 'Rs. 500 - Rs. 999', 'Rs. 1000 - Rs. 1999'].map((price, i) => (
-                      <label key={i} className="flex items-center space-x-2">
-                        <input type="checkbox" className="form-checkbox" />
-                        <span>{price}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
 
-                <div>
-                  <h3 className="font-semibold mb-1">
-                    Color <span className="text-blue-500 text-sm ml-2 cursor-pointer">Clear All</span>
-                  </h3>
-
-                  <div className="text-sm text-gray-700 space-y-1 max-h-28 overflow-y-auto">
-                    {['Blue', 'Black', 'Red '].map((color, i) => (
-                      <label key={i} className="flex items-center space-x-2">
-                        <input type="checkbox" className="form-checkbox" />
-                        <span>{color}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-              </aside> */}
-
-              {/* Product List */}
               <main className="md:col-span-5">
 
                 <p className="text-sm text-gray-500 mb-4">{filteredProducts.length} Products Found</p>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                   {
                   filteredProducts.length < 0 ? <Loader/> : filteredProducts.map((product) => (
                     <ProductCard product={product}/>
@@ -139,4 +109,4 @@ const CategoryPage = ({ searchTerm }) => {
   );
 };
 
-export default CategoryPage;
+export default ProductsPage;
