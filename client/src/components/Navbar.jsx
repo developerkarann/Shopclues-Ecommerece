@@ -29,7 +29,7 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
     },
     {
       nav: 'Refurbished Mobile',
-      link: 'refurbished-mobile'
+      link: 'mobile'
     },
     {
       nav: 'Express Shipping',
@@ -37,7 +37,7 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
     },
     {
       nav: "Men's Clothing",
-      link: "Mens-Clothing"
+      link: "mens-Clothing"
     },
     {
       nav: "Women's Fashion",
@@ -49,15 +49,15 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
     },
     {
       nav: 'Kitchen-&-Dinning',
-      link: ''
+      link: 'kitchen-&-Dinning'
     },
     {
       nav: 'Audio-&-headphones',
-      link: ''
+      link: 'audio'
     },
     {
       nav: 'bags-&-luggage',
-      link: ''
+      link: 'bags'
     },
   ]
 
@@ -177,7 +177,7 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
                 <Link to="/login" >
                   <div className="relative group">
                     <span className="text-sm font-semibold text-black cursor-pointer">Sign In</span>
-                    <AcccountSidebar />
+                    {/* <AcccountSidebar /> */}
                   </div>
 
                 </Link>

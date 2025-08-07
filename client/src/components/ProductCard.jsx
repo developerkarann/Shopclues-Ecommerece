@@ -23,19 +23,18 @@ const ProductCard = ({ product }) => {
     }
 
     return (
-        <div key={product.id} className="bg-white p-4 rounded shadow-sm  transition-all duration-200 transform hover:scale-103">
-            <div className="relative">
-                <img
-                    src={product.image}
-                    // src='https://images.unsplash.com/photo-1556656793-08538906a9f8?w=300&h=300&fit=crop'
-                    alt={product.title}
-                    className=" h-50 w-full object-contain"
-                />
-                <Heart
-                    onClick={handleTogle}
-                    className={`absolute top-2 right-2 w-5 hover:cursor-pointer h-5 ${isWishlisted ? 'bg-red-500 text-white' : 'text-gray-600'}`} />
-            </div>
+        <div key={product.id} className="bg-white p-4 rounded shadow-sm transition-all duration-200 transform hover:scale-103">
+                <div className="relative">
+                    <Heart onClick={handleTogle} className={`absolute top-2 right-2 z-50  font-bold w-5 hover:cursor-pointer h-5 ${isWishlisted ? ' text-red-500' : 'text-gray-600'}`} />
+                    <img
+                        src={product.image}
+                        // src='https://images.unsplash.com/photo-1556656793-08538906a9f8?w=300&h=300&fit=crop'
+                        alt={product.title}
+                        className=" h-50 w-full object-contain"
+                        />
+                </div>
             <Link to={`/product/${product.id}`}>
+
                 <p className="mt-2 text-sm font-medium text-gray-800">
                     {product.title.slice(0, 50)}...
                 </p>

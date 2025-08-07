@@ -37,13 +37,17 @@ const HomePage = ({ searchTerm }) => {
         </div>
         <div className="bg-white w-68 h-[400px] invisible lg:visible rounded shadow-sm">
           {
-            [1, 2, 3,].map((item, i) => (
-              <div className="item flex flex-col max-h-35 p-2 justify-center items-center">
+            productsData.slice(0, 3).map((item, i) => (
+              <div className="item flex flex-col max-h-35 p-2 justify-center items-center" key={i}>
                 <img
                   className="h-20 w-10"
-                  src="/images/iphone.png" alt="" />
-                <p className="cat text-sm mt-[-4px]">Refub Store</p>
-                <p className="title font-bold mt-[-6px]">Shop Now</p>
+                  src={item.image} alt={item.title} />
+                <p className="cat text-sm mt-[-4px]">{item?.title?.slice(0, 15)}...</p>
+                <p className="title font-bold mt-[-6px]">
+                  <Link to={`/product/${item.id}`}>
+                    Shop Nowx
+                  </Link>
+                </p>
               </div>
             ))
           }
@@ -80,9 +84,9 @@ const HomePage = ({ searchTerm }) => {
 
 
             {
-                productCategory.map((category, index) => (
-                  <SectionBlock key={index} category={category} />
-                ))}
+              productCategory.map((category, index) => (
+                <SectionBlock key={index} category={category} />
+              ))}
           </div>
       }
     </div>

@@ -1,28 +1,37 @@
 import { IndianRupee, Shield, ShoppingCart } from 'lucide-react'
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
+  const quickLinks = [
+    { name: 'Home', href: '/' },
+    { name: 'All Product', href: '/products' },
+    { name: 'Wishlist', href: '/wishlist' },
+    { name: 'Cart', href: '/cart' },
+    { name: 'Login', href: '/login' }
+  ];
+
   return (
     <>
       <footer className="bg-gray-50 text-gray-700 text-sm">
 
         <div className="border-b border-gray-200 p-6 grid grid-cols-3 sm:grid-cols-3 text-center gap-4">
           <div className='flex flex-col justify-center items-center'>
-           <Shield className="text-blue-400 text-4xl mb-1"/>
+            <Shield className="text-blue-400 text-4xl mb-1" />
             <p className="font-medium">Great Selection</p>
           </div>
           <div className='flex flex-col justify-center items-center'>
-            <IndianRupee  className="text-blue-400 text-8xl"/>
+            <IndianRupee className="text-blue-400 text-8xl" />
             <p>Low Price</p>
           </div>
           <div className='flex flex-col justify-center items-center'>
-            <ShoppingCart className='text-blue-400 text-4xl mb-1'/>
+            <ShoppingCart className='text-blue-400 text-4xl mb-1' />
             <p className="font-medium">Speedy Delivery</p>
           </div>
         </div>
 
 
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-6 px-6 py-8 border-b border-gray-200">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 px-6 py-8 border-b border-gray-200">
 
           <div>
             <h4 className="font-semibold mb-2">Shopper Central</h4>
@@ -70,45 +79,39 @@ const Footer = () => {
 
 
           <div>
-            <h4 className="font-semibold mb-2">Contact Us</h4>
+            <h4 className="font-semibold mb-2">Quick Links</h4>
             <ul className="space-y-1 text-gray-600">
-              <li>Merchant Support</li>
-              <li>Bulk Orders</li>
-              <li>Press</li>
+              {quickLinks.map((item, index) => (
+                <li key={index}
+
+                >
+                  <Link to={item.href} target='_blank'
+                    className="text-gray-600 hover:cursor-pointer"
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-
-          <div>
-            <h4 className="font-semibold mb-2">Press</h4>
-            <ul className="space-y-1 text-gray-600">
-              <li>In the News</li>
-            </ul>
-          </div>
         </div>
 
 
         <div className="px-6 py-6 flex flex-col sm:flex-row items-center justify-between">
 
           <div className="flex space-x-4 text-blue-500 mb-4 sm:mb-0">
-            {/* <a href="#"><i className="fab fa-facebook-f">F</i></a>
-            <a href="#"><i className="fab fa-pinterest">P</i></a>
-            <a href="#"><i className="fab fa-twitter">T</i></a>
-            <a href="#"><i className="fab fa-google-plus-g">G+</i></a>
-            <a href="#"><i className="fab fa-youtube">YT</i></a>
-            <a href="#"><i className="fab fa-linkedin-in">in</i></a> */}
+            <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0">
+              <div className="flex items-center space-x-1 text-gray-900 text-sm">
+                <span>© 2025 Shopclues.com</span>
+              </div>
+            </div>
           </div>
 
 
           <div className="text-center">
             <p className="font-semibold mb-2">100% Secure and Trusted Payment</p>
-            {/* <div className="flex flex-wrap justify-center gap-2">
-              <img src="https://via.placeholder.com/60x20?text=Visa" alt="Visa" />
-              <img src="https://via.placeholder.com/60x20?text=MasterCard" alt="MasterCard" />
-              <img src="https://via.placeholder.com/60x20?text=RuPay" alt="RuPay" />
-              <img src="https://via.placeholder.com/60x20?text=Amex" alt="Amex" />
-              <img src="https://via.placeholder.com/60x20?text=EMI" alt="EMI" />
-            </div> */}
+
           </div>
         </div>
       </footer>
