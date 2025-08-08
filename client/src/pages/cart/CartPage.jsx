@@ -10,7 +10,7 @@ const CartPage = () => {
   const grandTotal = cart.reduce((acc, val) => acc + val.price, 0)
 
   return (
-    <div className="min-h-screen bg-[#f0f8fb] px-4 py-6">
+    <div className="min-h-screen bg-[#f0f8fb] px-4 py-45">
       <h2 className="text-xl font-semibold mb-4">My Cart ( {cart.length} Item )</h2>
       {
         cart.length > 0 ? <>
