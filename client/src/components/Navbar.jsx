@@ -142,8 +142,6 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
                 <Bell />
 
                 <div className="relative group">
-                  {/* <Link to='/wishlist'>  <Heart /> </Link> */}
-
                   <Link to="/wishlist" className="relative inline-block">
                     <Heart className="w-6 h-6 text-gray-700" />
 

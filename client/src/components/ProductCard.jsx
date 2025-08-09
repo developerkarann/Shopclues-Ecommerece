@@ -40,9 +40,6 @@ const ProductCard = ({ product }) => {
                 </p>
                 <div className="text-sm mt-1 flex gap-3">
                     <span className="font-semibold text-black">₹{product.price}</span>{" "}
-                    {/* <span className="line-through text-gray-500 text-xs">
-                        ₹{product.originalPrice}
-                    </span> */}
                     <span className="text-green-600">{product.discount}% off</span>
                 </div>
             </Link>

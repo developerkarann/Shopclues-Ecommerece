@@ -14,12 +14,8 @@ const ProductsPage = ({ searchTerm }) => {
   const { cat } = useParams()
 
 
-
-
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 12; 
-
-
 
 
   // console.log(productsData)

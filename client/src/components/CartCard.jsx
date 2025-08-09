@@ -1,4 +1,4 @@
-import { removeFromCart } from '../redux/slices/cartSlice';
+import { removeFromCart, updateQuantity } from '../redux/slices/cartSlice';
 import { Minus, Plus } from 'lucide-react'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const CartCard = ({ product }) => {
 
     const dispatch = useDispatch()
-    let [count, setCounter] = useState(1)
+let [count, setCounter] = useState(1)
 
     const handleDecrement = () => {
         if (count > 1) {
@@ -25,11 +25,11 @@ const CartCard = ({ product }) => {
                 />
                 <div className="flex-1">
                     <p className="text-sm font-medium">
-                        {product.title.slice(0,60)}
+                        {product.title.slice(0, 60)}
                     </p>
                     <div className="flex products-center gap-3 mt-2">
                         <button className="w-6 h-6 flex products-center justify-center bg-gray-200 rounded-full">
-                            <Minus className="w-4 h-4 hover:cursor-pointer" onClick={handleDecrement} />
+                            <Minus className="w-4 h-4 hover:cursor-pointer"  onClick={handleDecrement} />
                         </button>
                         <span>{count}</span>
                         <button className="w-6 h-6 flex products-center justify-center bg-gray-200 rounded-full">
