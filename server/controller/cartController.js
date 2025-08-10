@@ -4,7 +4,6 @@ exports.getCart = async (req, res) => {
     const {userId} = req.user;
     if (!userId) {
         return res.status(401).json({ suceess: false, message: 'User not found' })
-
     }
     try {
         const user = await User.findById(userId);

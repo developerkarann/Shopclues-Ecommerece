@@ -173,8 +173,8 @@ const MobileNavbar = ({ searchTerm, setSearchTerm }) => {
                                     <div className="space-y-6 text-black">
                                         <div className="flex flex-col gap-10  text-base" >
                                             {
-                                                navItems.map((item) => (
-                                                    <Link to={item.href} onClick={closeMenu} >{item.name} </Link>
+                                                navItems.map((item, i) => (
+                                                    <Link to={item.href} key={i} onClick={closeMenu} >{item.name} </Link>
                                                 ))
                                             }
                                         </div>

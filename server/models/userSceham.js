@@ -15,23 +15,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    wishlist: [{
-        productId: {
-            type: String
-        },
-        title: {
-            type: String
-        },
-        image: {
-            type: String
-        },
-        price: {
-            type: String
-        },
-        discount: {
-            type: String
-        }
-    }],
     cart: [{
         productId: {
             type: String

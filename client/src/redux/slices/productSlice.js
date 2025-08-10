@@ -9,7 +9,7 @@ const initialState = {
 
 export const fetchProducts = createAsyncThunk('fetchProducts', async()=>{
     let resData = []
-    const response = await axios(`https://fakestoreapi.in/api/products`)
+    const response = await axios(`${import.meta.env.VITE_SERVER}/products`)
     .then((res)=>{
          resData = res.data.products
     }).catch((err)=>{

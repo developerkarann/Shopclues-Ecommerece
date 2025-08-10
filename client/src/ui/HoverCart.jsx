@@ -11,6 +11,7 @@ const HoverCard = () => {
     let [count, setCounter] = useState(1)
 
     const cart = useSelector((state) => state.cart);
+    const token = useSelector((state) => state.auth.token);
     const grandTotle = cart.reduce((acc, val) => acc + val.price, 0)
 
     
@@ -34,9 +35,9 @@ const HoverCard = () => {
                         <div>
                             <div className="bg-white p-4 rounded shadow-sm flex flex-col gap-4">
                                 {
-                                    cart.map((product) => (
-                                        <CartCard product={product} />
-                                    ))
+                                  cart.map((product, i) => (
+                                        <CartCard product={product} key={i} />
+                                    )) 
                                 }
                             </div>
 

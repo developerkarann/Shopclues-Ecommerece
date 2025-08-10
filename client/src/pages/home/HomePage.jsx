@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { ArrowRight, Heart } from "lucide-react";
-import ProductCard from "../../components/ProductCard";
-import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
-import { Link } from "react-router-dom";
-import { fetchProducts } from "../../redux/slices/productSlice";
+import { ArrowRight } from "lucide-react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import Loader from "../../components/Loader";
+import ProductCard from "../../components/ProductCard";
+import { fetchProducts } from "../../redux/slices/productSlice";
 
 const HomePage = ({ searchTerm }) => {
   const dispatch = useDispatch()
@@ -126,8 +125,8 @@ const SectionBlock = ({ category, searchTerm }) => {
 
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-6">
           {
-            filteredProducts.slice(0, 5).map((product) => (
-              <ProductCard product={product} />
+            filteredProducts.slice(0, 5).map((product, i)=> (
+              <ProductCard product={product} key={i} />
             ))}
         </div>
 

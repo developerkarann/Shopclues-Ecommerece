@@ -5,10 +5,59 @@ import {
   ShoppingCart
 } from "lucide-react";
 import { useState } from "react";
+import { useDispatch } from 'react-redux'
+import { loginUser, registerUser } from "../../redux/slices/auth";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function AuthenticationPage() {
-  const [activeTab, setActiveTab] = useState("login");
+
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   
+  const [activeTab, setActiveTab] = useState("login");
+  const [loading , setLoading] = useState(false)
+
+  const handleRegister = async (e) => {
+    setLoading(true)
+    e.preventDefault()
+
+    const email = e.target.email.value;
+    const password = e.target.email.value;
+    const address = e.target.email.value;
+
+    try {
+      const res = await dispatch(registerUser({ email, password, address })).unwrap()
+      toast.success(res.message)
+    } catch (error) {
+      console.log('Register User', error);
+      toast.error(error)
+    }finally{
+      setLoading(false)
+    }
+
+  }
+
+  const handleLogin = async (e) => {
+    setLoading(true)
+    e.preventDefault()
+
+    const email = e.target.email.value;
+    const password = e.target.email.value;
+    try {
+      const res = await dispatch(loginUser({ email, password })).unwrap()
+      toast.success(res.message)
+     navigate('/')
+      // console.log(res)
+    } catch (error) {
+      console.log('Login User', error);
+      toast.error(error)
+    }finally{
+      setLoading(false)
+    }
+
+  }
 
   return (
     <div className="flex justify-center items-center px-4 py-45 z-50">
@@ -43,21 +92,19 @@ export default function AuthenticationPage() {
           {/* Tabs */}
           <div className="border-b border-gray-200 mb-6 flex space-x-6">
             <button
-              className={`pb-2 px-1 font-medium text-sm border-b-2 ${
-                activeTab === "login"
-                  ? "border-cyan-500 text-cyan-500"
-                  : "border-transparent text-gray-500 hover:text-gray-700"
-              }`}
+              className={`pb-2 px-1 font-medium text-sm border-b-2 ${activeTab === "login"
+                ? "border-cyan-500 text-cyan-500"
+                : "border-transparent text-gray-500 hover:text-gray-700"
+                }`}
               onClick={() => setActiveTab("login")}
             >
               LOGIN
             </button>
             <button
-              className={`pb-2 px-1 font-medium text-sm border-b-2 ${
-                activeTab === "register"
-                  ? "border-cyan-500 text-cyan-500"
-                  : "border-transparent text-gray-500 hover:text-gray-700"
-              }`}
+              className={`pb-2 px-1 font-medium text-sm border-b-2 ${activeTab === "register"
+                ? "border-cyan-500 text-cyan-500"
+                : "border-transparent text-gray-500 hover:text-gray-700"
+                }`}
               onClick={() => setActiveTab("register")}
             >
               REGISTER
@@ -66,7 +113,7 @@ export default function AuthenticationPage() {
 
           {/* Form Content */}
           {activeTab === "login" && (
-            <form className="space-y-6 max-w-md">
+            <form className="space-y-6 max-w-md" onSubmit={handleLogin}>
               <div className="relative">
                 <input
                   type="text"
@@ -85,68 +132,50 @@ export default function AuthenticationPage() {
               </div>
               <button
                 type="submit"
-                className="w-full border border-orange-500 text-orange-600 font-semibold py-2 rounded transition hover:bg-orange-50"
+                disabled={loading}
+                className="w-full border hover:cursor-pointer border-cyan-500 text-cyan-600 font-semibold py-2 rounded transition hover:bg-cyan-50"
               >
-                Login via OTP
+                {loading ? 'Please wait...' : 'Login'}
               </button>
-              <div>
-                <p className="text-sm font-semibold mb-2">Social Login</p>
-                <button
-                  type="button"
-                  className="flex items-center gap-2 text-white bg-blue-700 hover:bg-blue-800 px-4 py-2 rounded text-sm"
-                >
-                  <Facebook className="w-4 h-4" />
-                  Continue with Facebook
-                </button>
-              </div>
+
             </form>
           )}
 
           {activeTab === "register" && (
-            <form className="space-y-6 max-w-md">
-              <div>
-                <input
-                  type="text"
-                  name="full-name"
-                  id="full-name"
-                  placeholder="Full Name"
-                  className="block w-full border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-orange-500 px-1 py-2 placeholder-gray-400"
-                />
-              </div>
+            <form className="space-y-6 max-w-md" onSubmit={handleRegister}>
               <div>
                 <input
                   type="email"
                   name="email"
                   id="email"
-                  placeholder="Email Address"
+                  placeholder="Email address"
+                  className="block w-full border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-orange-500 px-1 py-2 placeholder-gray-400"
+                />
+              </div>
+              <div>
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="Password"
                   className="block w-full border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-orange-500 px-1 py-2 placeholder-gray-400"
                 />
               </div>
               <div>
                 <input
                   type="text"
-                  name="mobile"
-                  id="mobile"
-                  placeholder="Mobile Number"
+                  name="address"
+                  id="address"
+                  placeholder="Your address"
                   className="block w-full border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-orange-500 px-1 py-2 placeholder-gray-400"
                 />
               </div>
               <button
                 type="submit"
-                className="w-full border border-orange-500 text-orange-600 font-semibold py-2 rounded transition hover:bg-orange-50"
+                className="w-full border border-cyan-500 hover:cursor-pointer text-cyan-600 font-semibold py-2 rounded transition hover:bg-cyan-50"
               >
-                Register
+                  {loading ? 'Creating account...' : 'Register'}
               </button>
-              <div>
-                <p className="text-sm font-semibold mb-2">Social Signup</p>
-                <button
-                  type="button"
-                  className="flex items-center gap-2 text-white bg-blue-700 hover:bg-blue-800 px-4 py-2 rounded text-sm"
-                >
-                  <Facebook className="w-4 h-4" />
-                  Continue with Facebook
-                </button>
-              </div>
             </form>
           )}
         </div>

@@ -17,7 +17,7 @@ exports.getAllProducts = async (req, res) => {
 exports.getProduct = async (req, res) => {
     const { id } = req.params;
     try {
-        const product = await Product.find({ id })
+        const product = await Product.findOne({ id })
         if (!product) {
             return res.status(401).json({ success: false, message: 'Failed to fetch the product details' })
         }

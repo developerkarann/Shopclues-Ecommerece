@@ -12,14 +12,18 @@ import AcccountSidebar from "../ui/AccountSidebar";
 import HoverCard from "../ui/HoverCart";
 import HoverWishlist from "../ui/HoverWishlist";
 import MobileNavbar from "./MobileNavbar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { logout } from "../redux/slices/auth";
 
 const Navbar = ({ searchTerm, setSearchTerm }) => {
 
   const wishlist = useSelector((state) => state.wishlist)
   const cart = useSelector((state) => state.cart);
+  const token = useSelector((state) => state.auth.token)
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
 
   const subNav = [
@@ -68,6 +72,10 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
     "TV"
   ]
 
+  const handleLogout = ()=>{
+    dispatch(logout())
+    toast.success('Logged Out!')
+  }
 
 
   return (
@@ -109,23 +117,23 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
 
             {/* Search Bar */}
             <div className="flex-1 relative max-w-2xl mx-4 hidden md:block ">
-         
-                <div className="flex rounded overflow-hidden ">
-                  <div className="flex items-center px-3 bg-[#eaf7fb]">
-                    <Search className="text-gray-500 w-4 h-4" />
-                  </div>
-                  <input
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    type="text"
-                    placeholder="What is on your mind today?"
-                    className="flex-1 px-3 py-2 bg-[#eaf7fb] outline-none"
-                  />
-                  <button type="submit" className="bg-gradient-to-r from-orange-400 to-pink-500 text-white font-semibold px-8 py-3 shadow-md hover:opacity-90 transition">
-                    Search
-                  </button>
+
+              <div className="flex rounded overflow-hidden ">
+                <div className="flex items-center px-3 bg-[#eaf7fb]">
+                  <Search className="text-gray-500 w-4 h-4" />
                 </div>
-           
+                <input
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  type="text"
+                  placeholder="What is on your mind today?"
+                  className="flex-1 px-3 py-2 bg-[#eaf7fb] outline-none"
+                />
+                <button type="submit" className="bg-gradient-to-r from-orange-400 to-pink-500 text-white font-semibold px-8 py-3 shadow-md hover:opacity-90 transition">
+                  Search
+                </button>
+              </div>
+
             </div>
 
 
@@ -133,13 +141,13 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
             {/* Right side */}
             <div className="flex items-center space-x-4 text-cyan-700 gap-2 ">
 
-              <div className="text-md text-center ">
+              {/* <div className="text-md text-center ">
                 <span className="font-medium text-black">20xx51</span>
                 <div className="text-[12px] text-cyan-700 cursor-pointer">Change</div>
-              </div>
-              <div className="flex items-center space-x-4 text-cyan-700 gap-2 pt-3 ">
-                <MapPin className="ml-[-10px]" />
-                <Bell />
+              </div> */}
+              <div className="flex items-center space-x-4 text-cyan-700 gap-5 pt-3 ">
+                {/* <MapPin className="ml-[-10px]" />
+                <Bell /> */}
 
                 <div className="relative group">
                   <Link to="/wishlist" className="relative inline-block">
@@ -158,21 +166,32 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
                   <Link to="/cart" className="relative inline-block">
                     <ShoppingCart className="w-6 h-6 text-gray-700" />
 
-                    {cart.length > 0 && (
+                    { token ? cart.length > 0 && (
                       <span className="absolute -top-2 -right-3 bg-cyan-600 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
                         {cart.length}
                       </span>
-                    )}
+                    ): ''}
                   </Link>
-                  <HoverCard />
+                  {
+                  token ? <HoverCard /> : <></> 
+                  }
+             
                 </div>
-                <Link to="/login" >
-                  <div className="relative group">
-                    <span className="text-sm font-semibold text-black cursor-pointer">Sign In</span>
-                    {/* <AcccountSidebar /> */}
-                  </div>
+                {
+                  token ? <>
+                      <div className="relative group">
+                        <span onClick={handleLogout} className="text-sm font-semibold text-black cursor-pointer">Logout</span>
+                      </div>
+                  </> : <>
+                    <Link to="/login" >
+                      <div className="relative group">
+                        <span className="text-sm font-semibold text-black cursor-pointer">Sign In</span>
+                      </div>
 
-                </Link>
+                    </Link>
+                  </>
+                }
+
               </div>
             </div>
           </div>
@@ -198,8 +217,8 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
             <div className="max-w-7xl mx-auto px-4 py-2 flex space-x-6 overflow-x-auto text-gray-600">
 
               {
-                subNav.map((nav) => (
-                  <Link to={`/products/${nav.link}`}>
+                subNav.map((nav,i) => (
+                  <Link to={`/products/${nav.link}` } key={i}>
                     <span className="cursor-pointer">{nav.nav}</span>
                   </Link>
                 ))
