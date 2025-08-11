@@ -17,8 +17,6 @@ const ProductsPage = ({ searchTerm }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 12; 
 
-
-  // console.log(productsData)
   useEffect(() => {
     dispatch(fetchProducts())
   }, [])

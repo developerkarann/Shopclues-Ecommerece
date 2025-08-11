@@ -1,10 +1,8 @@
 import axios from 'axios';
-import { removeFromCart, updateQuantity } from '../redux/slices/cartSlice';
-import { Minus, Plus } from 'lucide-react'
-import React, { useState } from 'react'
+import { Minus, Plus } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { useEffect } from 'react';
 
 const CartCard = ({ product }) => {
 

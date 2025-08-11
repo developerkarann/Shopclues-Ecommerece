@@ -1,9 +1,8 @@
-import { toggleWishlist } from '../redux/slices/wishlistSlice'
 import { Heart } from 'lucide-react'
-import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { toggleWishlist } from '../redux/slices/wishlistSlice'
 
 const ProductCard = ({ product }) => {
 

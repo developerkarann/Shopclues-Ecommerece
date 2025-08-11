@@ -1,20 +1,15 @@
-import React, { useState } from "react";
 import {
-  Search,
-  ShoppingCart,
-  Bell,
   Heart,
-  MapPin
+  Search,
+  ShoppingCart
 } from "lucide-react";
-import MainNavLinks from "../ui/MainNavLinks";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import AcccountSidebar from "../ui/AccountSidebar";
+import { toast } from "react-toastify";
+import { logout } from "../redux/slices/auth";
 import HoverCard from "../ui/HoverCart";
 import HoverWishlist from "../ui/HoverWishlist";
 import MobileNavbar from "./MobileNavbar";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import { logout } from "../redux/slices/auth";
 
 const Navbar = ({ searchTerm, setSearchTerm }) => {
 
@@ -163,12 +158,12 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
                 {
                   token ? <>
                     <div className="relative group">
-                      <span onClick={handleLogout} className="text-sm font-semibold text-black cursor-pointer">Logout</span>
+                      <span onClick={handleLogout} className="text-sm font-semibold text-cyan-700 cursor-pointer">Logout</span>
                     </div>
                   </> : <>
                     <Link to="/login" >
                       <div className="relative group">
-                        <span className="text-sm font-semibold text-black cursor-pointer">Sign In</span>
+                        <span className="text-sm font-semibold text-cyan-700 cursor-pointer">Sign In</span>
                       </div>
 
                     </Link>

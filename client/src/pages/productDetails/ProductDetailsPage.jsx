@@ -42,7 +42,6 @@ const ProductDetailsPage = () => {
             toast.success(res.data.message)
             navigate('/cart')
         } catch (error) {
-            // console.log(error.response?.data)
             toast.error(error.response?.data?.message)
         }
 

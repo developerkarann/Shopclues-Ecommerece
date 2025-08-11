@@ -49,7 +49,6 @@ export default function AuthenticationPage() {
       const res = await dispatch(loginUser({ email, password })).unwrap()
       toast.success(res.message)
       navigate('/')
-      // console.log(res)
     } catch (error) {
       console.log('Login User', error);
       toast.error(error)

@@ -12,8 +12,8 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Link, useNavigate } from "react-router-dom";
-import { logout } from "../redux/slices/auth";
 import { toast } from "react-toastify";
+import { logout } from "../redux/slices/auth";
 
 const MobileNavbar = ({ searchTerm, setSearchTerm }) => {
 
