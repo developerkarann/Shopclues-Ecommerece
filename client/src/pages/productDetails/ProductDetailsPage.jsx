@@ -6,10 +6,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { addToCart } from "../../redux/slices/cartSlice";
 import Loader from "../../components/Loader";
+import { fetchCart } from "../../redux/slices/newCartSlice";
 
 const ProductDetailsPage = () => {
 
-  const token = useSelector((state) => state.auth.token)
+    const token = useSelector((state) => state.auth.token)
+
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -27,20 +29,35 @@ const ProductDetailsPage = () => {
             console.log(error.message)
         }
     }
-    const handleAdd = () => {
-        if(!token){
+    const handleAdd = async () => {
+        if (!token) {
             return navigate('/login')
         }
-        dispatch(addToCart(product))
-        toast.success('Added to cart')
+        try {
+            const res = await axios.post(`${import.meta.env.VITE_SERVER}/cart`, { productId: product.id, title: product.title, image: product.image, price: product.price, discount: product.discount }, {
+                headers: {
+                    Authorization: token,
+                }
+            })
+            toast.success(res.data.message)
+            navigate('/cart')
+        } catch (error) {
+            // console.log(error.response?.data)
+            toast.error(error.response?.data?.message)
+        }
+
     }
     const handleBuyBtn = () => {
-        navigate('/login')
+        if (!token) {
+            return navigate('/login')
+        }
+        toast.info('This Functionality is under Dev')
     }
 
     useEffect(() => {
         handleSearch()
-    }, [])
+        dispatch(fetchCart(token))
+    }, [dispatch, fetchCart, token])
 
     return (
         <>

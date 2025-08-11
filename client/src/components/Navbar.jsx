@@ -19,8 +19,9 @@ import { logout } from "../redux/slices/auth";
 const Navbar = ({ searchTerm, setSearchTerm }) => {
 
   const wishlist = useSelector((state) => state.wishlist)
-  const cart = useSelector((state) => state.cart);
+  const cart = useSelector((state) => state.cart.data);
   const token = useSelector((state) => state.auth.token)
+  const user = useSelector((state) => state.auth.user)
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -72,7 +73,7 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
     "TV"
   ]
 
-  const handleLogout = ()=>{
+  const handleLogout = () => {
     dispatch(logout())
     toast.success('Logged Out!')
   }
@@ -84,23 +85,9 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
 
 
       <div className="font-sans text-gray-800 hidden md:block fixed w-full bg-white z-50">
-        <div className="topHeader flex justify-between ">
-          <div></div>
-          <div className="flex gap-6 pt-2 px-4">
-            <a href="#" className="text-xs text-gray-500 hover:underline">Sell With Us</a>
-            <a href="#" className="text-xs text-gray-500 hover:underline">Contact Us</a>
-            <a href="#" className="text-xs text-gray-500 hover:underline flex items-center space-x-1">
-              <span>Download App</span>
-              <span className="flex items-center space-x-1">
-                <img src="https://img.icons8.com/ios-filled/12/000000/android-os.png" alt="Android" />
-                <img src="https://img.icons8.com/ios-filled/12/000000/mac-os.png" alt="iOS" />
-              </span>
-            </a>
-          </div>
-        </div>
 
         {/* Header */}
-        <header className="bg-white shadow-sm text-sm ">
+        <header className="bg-white shadow-sm text-sm pt-2">
           <div className="max-w-7xl mx-auto px-1 py-1 flex items-center justify-between mb-2">
             <Link to='/' className=" hidden md:block">
               <div className="flex items-center space-x-4">
@@ -140,18 +127,14 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
 
             {/* Right side */}
             <div className="flex items-center space-x-4 text-cyan-700 gap-2 ">
-
-              {/* <div className="text-md text-center ">
-                <span className="font-medium text-black">20xx51</span>
-                <div className="text-[12px] text-cyan-700 cursor-pointer">Change</div>
-              </div> */}
-              <div className="flex items-center space-x-4 text-cyan-700 gap-5 pt-3 ">
-                {/* <MapPin className="ml-[-10px]" />
-                <Bell /> */}
+              <div className="flex items-center space-x-4 text-cyan-700 gap-3 pt-3 ">
+                {/* <div className="relative group">
+                 {token ? <> <span>{user?.name}</span> </> : <></>}
+                </div> */}
 
                 <div className="relative group">
                   <Link to="/wishlist" className="relative inline-block">
-                    <Heart className="w-6 h-6 text-gray-700" />
+                    <Heart className="w-6 h-6 " />
 
                     {wishlist.length > 0 && (
                       <span className="absolute -top-2 -right-3 bg-cyan-600 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
@@ -164,24 +147,24 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
 
                 <div className="relative group">
                   <Link to="/cart" className="relative inline-block">
-                    <ShoppingCart className="w-6 h-6 text-gray-700" />
+                    <ShoppingCart className="w-6 h-6 " />
 
-                    { token ? cart.length > 0 && (
+                    {token ? cart.length > 0 && (
                       <span className="absolute -top-2 -right-3 bg-cyan-600 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
                         {cart.length}
                       </span>
-                    ): ''}
+                    ) : ''}
                   </Link>
                   {
-                  token ? <HoverCard /> : <></> 
+                    token ? <HoverCard /> : <></>
                   }
-             
+
                 </div>
                 {
                   token ? <>
-                      <div className="relative group">
-                        <span onClick={handleLogout} className="text-sm font-semibold text-black cursor-pointer">Logout</span>
-                      </div>
+                    <div className="relative group">
+                      <span onClick={handleLogout} className="text-sm font-semibold text-black cursor-pointer">Logout</span>
+                    </div>
                   </> : <>
                     <Link to="/login" >
                       <div className="relative group">
@@ -217,8 +200,8 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
             <div className="max-w-7xl mx-auto px-4 py-2 flex space-x-6 overflow-x-auto text-gray-600">
 
               {
-                subNav.map((nav,i) => (
-                  <Link to={`/products/${nav.link}` } key={i}>
+                subNav.map((nav, i) => (
+                  <Link to={`/products/${nav.link}`} key={i}>
                     <span className="cursor-pointer">{nav.nav}</span>
                   </Link>
                 ))

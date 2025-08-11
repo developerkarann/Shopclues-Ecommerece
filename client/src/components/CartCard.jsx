@@ -1,18 +1,46 @@
+import axios from 'axios';
 import { removeFromCart, updateQuantity } from '../redux/slices/cartSlice';
 import { Minus, Plus } from 'lucide-react'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { useEffect } from 'react';
 
 const CartCard = ({ product }) => {
 
+    const token = useSelector((state) => state.auth.token);
+
     const dispatch = useDispatch()
-let [count, setCounter] = useState(1)
+    let [count, setCounter] = useState(1)
+
 
     const handleDecrement = () => {
         if (count > 1) {
             setCounter(count - 1);
         }
     };
+
+    const handleRemove = async () => {
+        console.log('productId', product.id)
+        try {
+            const res = await axios.delete(`${import.meta.env.VITE_SERVER}/cart/${product.productId}`, {
+                headers: {
+                    Authorization: token,
+                }
+            })
+            console.log(res.data)
+            toast.success(res.data.message)
+            document.location.reload()
+        } catch (error) {
+            console.log(error.response?.data)
+            toast.error(error.response?.data?.message)
+        }
+    }
+
+    useEffect(() => {
+      
+    }, [handleRemove, token])
+    
 
     return (
         <>
@@ -29,14 +57,14 @@ let [count, setCounter] = useState(1)
                     </p>
                     <div className="flex products-center gap-3 mt-2">
                         <button className="w-6 h-6 flex products-center justify-center bg-gray-200 rounded-full">
-                            <Minus className="w-4 h-4 hover:cursor-pointer"  onClick={handleDecrement} />
+                            <Minus className="w-4 h-4 hover:cursor-pointer" onClick={handleDecrement} />
                         </button>
                         <span>{count}</span>
                         <button className="w-6 h-6 flex products-center justify-center bg-gray-200 rounded-full">
                             <Plus className="w-4 h-4 hover:cursor-pointer" onClick={() => setCounter(count + 1)} />
                         </button>
                     </div>
-                    <button onClick={() => dispatch(removeFromCart(product.id))} className=" hover:cursor-pointer text-blue-500 text-sm mt-2">Remove</button>
+                    <button onClick={handleRemove} className=" hover:cursor-pointer text-blue-500 text-sm mt-2">Remove</button>
                 </div>
                 <div className="text-right text-sm">
                     <p>

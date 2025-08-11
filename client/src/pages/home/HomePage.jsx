@@ -5,10 +5,13 @@ import { Link } from "react-router-dom";
 import Loader from "../../components/Loader";
 import ProductCard from "../../components/ProductCard";
 import { fetchProducts } from "../../redux/slices/productSlice";
+import { fetchCart } from "../../redux/slices/newCartSlice";
 
 const HomePage = ({ searchTerm }) => {
+
   const dispatch = useDispatch()
   const productsData = useSelector((state) => state.products.data)
+  const token = useSelector((state) => state.auth.token)
 
   const filteredProducts = productsData.filter((product) =>
     product.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -16,6 +19,7 @@ const HomePage = ({ searchTerm }) => {
 
   useEffect(() => {
     dispatch(fetchProducts())
+    dispatch(fetchCart(token))
   }, [])
 
   const productCategory = [
@@ -125,7 +129,7 @@ const SectionBlock = ({ category, searchTerm }) => {
 
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-6">
           {
-            filteredProducts.slice(0, 5).map((product, i)=> (
+            filteredProducts.slice(0, 5).map((product, i) => (
               <ProductCard product={product} key={i} />
             ))}
         </div>

@@ -6,10 +6,11 @@ exports.resgisterUser = async (req, res, next) => {
     // console.log('Registered Triggered', req.body)
     const { email, password , address} = req.body;
     if (!email || !password || !address) {
-        return res.status(400).json({
-            success: false,
-            message: 'Please enter credentials'
-        })
+        return res.status(400).json({ success: false, message: 'Please enter credentials' })
+    }
+
+    if(password.length < 6){
+        return res.status(400).json({ success: false, message: 'Minimum 6 digit password is required' })
     }
 
     const userExist = await User.findOne({ email })
@@ -29,6 +30,7 @@ exports.resgisterUser = async (req, res, next) => {
             address: address
         })
 
+
         res.status(200).json({
             sucess: true,
             message: 'Account Created!',
@@ -47,9 +49,10 @@ exports.loginUser = async (req, res) => {
     const { email, password } = req.body
 
     const user = await User.findOne({ email })
+    console.log(user)
 
     if (!user) {
-        res.status(404).json({
+        return res.status(404).json({
             success: false,
             message: "User doesn't exists"
         })
@@ -57,8 +60,10 @@ exports.loginUser = async (req, res) => {
 
     let isValidPass = await bcrypt.compare(password, user.password)
 
+    console.log(isValidPass)
+
     if (!isValidPass) {
-        res.status(400).json({
+       return res.status(400).json({
             sucess: false,
             message: "Invalid password"
         })

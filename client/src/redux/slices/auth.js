@@ -20,7 +20,7 @@ export const registerUser = createAsyncThunk('auth/register', async ({ email, pa
         const response = await axios.post(`${import.meta.env.VITE_SERVER}/register`, { email, password, address })
         return response.data
     } catch (err) {
-        const message = err.response?.data?.message || 'Login failed. Please try again.';
+        const message = err.response?.data?.message || 'Register failed. Please try again.';
         return thunkAPI.rejectWithValue(message);
     }
 })
@@ -28,7 +28,7 @@ export const registerUser = createAsyncThunk('auth/register', async ({ email, pa
 export const authSlice = createSlice({
     name: 'auth',
     initialState: {
-        token:  tokenFromStorage || null,
+        token: tokenFromStorage || null,
         user: null,
         loading: false,
         error: null

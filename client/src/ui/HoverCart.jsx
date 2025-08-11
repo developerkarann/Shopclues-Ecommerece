@@ -10,7 +10,7 @@ const HoverCard = () => {
 
     let [count, setCounter] = useState(1)
 
-    const cart = useSelector((state) => state.cart);
+    const cart = useSelector((state) => state.cart.data);
     const token = useSelector((state) => state.auth.token);
     const grandTotle = cart.reduce((acc, val) => acc + val.price, 0)
 

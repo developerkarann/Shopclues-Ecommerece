@@ -1,24 +1,26 @@
 import { useState } from 'react'
-import './App.css'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
+import './App.css'
 import Footer from './components/Footer'
 import Navbar from './components/Navbar'
-import HomePage from './pages/home/HomePage'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import ProductDetailsPage from './pages/productDetails/ProductDetailsPage'
-import CartPage from './pages/cart/CartPage'
-import AuthenticationPage from './pages/Authentication/AuthenticationPage'
-import WishlistPage from './pages/wishlist/Wishlist'
-import ProductsPage from './pages/Products/ProductsPage'
 import ProtectedRoutes from './components/ProtectedRoutes'
 import ProtectLogin from './components/ProtectLogin'
+import AuthenticationPage from './pages/Authentication/AuthenticationPage'
+import CartPage from './pages/cart/CartPage'
+import HomePage from './pages/home/HomePage'
+import ProductDetailsPage from './pages/productDetails/ProductDetailsPage'
+import ProductsPage from './pages/Products/ProductsPage'
+import WishlistPage from './pages/wishlist/Wishlist'
 
 
 
 function App() {
 
+ 
   const [searchTerm, setSearchTerm] = useState('');
 
+  
   return (
     <>
       <BrowserRouter>

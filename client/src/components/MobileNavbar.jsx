@@ -1,6 +1,7 @@
 import {
     ArrowLeft,
     Heart,
+    LogOut,
     MenuIcon,
     Search,
     ShoppingCart,
@@ -8,19 +9,24 @@ import {
     X
 } from "lucide-react";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Link, useNavigate } from "react-router-dom";
+import { logout } from "../redux/slices/auth";
+import { toast } from "react-toastify";
 
 const MobileNavbar = ({ searchTerm, setSearchTerm }) => {
 
 
     const wishlist = useSelector((state) => state.wishlist)
     const cart = useSelector((state) => state.cart);
+    const token = useSelector((state) => state.auth.token)
+
 
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen)
@@ -38,14 +44,11 @@ const MobileNavbar = ({ searchTerm, setSearchTerm }) => {
     ];
 
 
-    const handleSearch = (e) => {
-        e.preventDefault();
 
-        if (searchTerm.trim()) {
-            navigate(`/products/${searchTerm.trim()}`);
-        }
-    };
-
+    const handleLogout = () => {
+        dispatch(logout())
+        toast.success('Logged Out!')
+    }
 
     return (
         <>
@@ -84,7 +87,7 @@ const MobileNavbar = ({ searchTerm, setSearchTerm }) => {
                                         {/* <Link to='/wishlist'>  <Heart /> </Link> */}
 
                                         <Link to="/wishlist" className="relative inline-block">
-                                            <Heart className="w-6 h-6 text-gray-700" />
+                                            <Heart className="w-6 h-6 " />
 
                                             {wishlist.length > 0 && (
                                                 <span className="absolute -top-2 -right-3 bg-cyan-600 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
@@ -92,25 +95,30 @@ const MobileNavbar = ({ searchTerm, setSearchTerm }) => {
                                                 </span>
                                             )}
                                         </Link>
-                                   
+
                                     </div>
 
                                     <div className="relative group">
                                         <Link to="/cart" className="relative inline-block">
-                                            <ShoppingCart className="w-6 h-6 text-gray-700" />
+                                            <ShoppingCart className="w-6 h-6 " />
 
-                                            {cart.length > 0 && (
+                                            {token ? cart.length > 0 && (
                                                 <span className="absolute -top-2 -right-3 bg-cyan-600 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
                                                     {cart.length}
                                                 </span>
-                                            )}
+                                            ) : ''}
                                         </Link>
-                                
-                                    </div>
 
-                                    <Link to="/login" >
-                                        <UserRound />
-                                    </Link>
+                                    </div>
+                                    {
+                                        token ? <>
+                                            <LogOut onClick={handleLogout} />
+                                        </> : <>
+                                            <Link to="/login" >
+                                                <UserRound />
+                                            </Link>
+                                        </>
+                                    }
                                 </div>
                             </div>
                         </div>

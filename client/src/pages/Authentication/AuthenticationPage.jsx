@@ -15,25 +15,24 @@ export default function AuthenticationPage() {
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  
+
   const [activeTab, setActiveTab] = useState("login");
-  const [loading , setLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const handleRegister = async (e) => {
     setLoading(true)
     e.preventDefault()
 
     const email = e.target.email.value;
-    const password = e.target.email.value;
-    const address = e.target.email.value;
+    const password = e.target.password.value;
+    const address = e.target.address.value;
 
     try {
       const res = await dispatch(registerUser({ email, password, address })).unwrap()
       toast.success(res.message)
     } catch (error) {
-      console.log('Register User', error);
       toast.error(error)
-    }finally{
+    } finally {
       setLoading(false)
     }
 
@@ -44,16 +43,17 @@ export default function AuthenticationPage() {
     e.preventDefault()
 
     const email = e.target.email.value;
-    const password = e.target.email.value;
+    const password = e.target.password.value;
+
     try {
       const res = await dispatch(loginUser({ email, password })).unwrap()
       toast.success(res.message)
-     navigate('/')
+      navigate('/')
       // console.log(res)
     } catch (error) {
       console.log('Login User', error);
       toast.error(error)
-    }finally{
+    } finally {
       setLoading(false)
     }
 
@@ -119,15 +119,17 @@ export default function AuthenticationPage() {
                   type="text"
                   name="email"
                   id="email"
-                  placeholder="Enter your mobile number or email id"
-                  className="block w-full appearance-none border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-orange-500 px-1 py-2 placeholder-gray-400"
+                  required
+                  placeholder="Enter your email id"
+                  className="block w-full appearance-none border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-cyan-500 px-1 py-2 placeholder-gray-400"
                 />
                 <input
                   type="text"
                   name="password"
                   id="password"
+                  required
                   placeholder="Enter your password"
-                  className="block w-full mt-5 appearance-none border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-orange-500 px-1 py-2 placeholder-gray-400"
+                  className="block w-full mt-5 appearance-none border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-cyan-500 px-1 py-2 placeholder-gray-400"
                 />
               </div>
               <button
@@ -148,8 +150,9 @@ export default function AuthenticationPage() {
                   type="email"
                   name="email"
                   id="email"
+                  required
                   placeholder="Email address"
-                  className="block w-full border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-orange-500 px-1 py-2 placeholder-gray-400"
+                  className="block w-full border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-cyan-500 px-1 py-2 placeholder-gray-400"
                 />
               </div>
               <div>
@@ -157,8 +160,9 @@ export default function AuthenticationPage() {
                   type="password"
                   name="password"
                   id="password"
+                  required
                   placeholder="Password"
-                  className="block w-full border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-orange-500 px-1 py-2 placeholder-gray-400"
+                  className="block w-full border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-cyan-500 px-1 py-2 placeholder-gray-400"
                 />
               </div>
               <div>
@@ -166,15 +170,16 @@ export default function AuthenticationPage() {
                   type="text"
                   name="address"
                   id="address"
+                  required
                   placeholder="Your address"
-                  className="block w-full border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-orange-500 px-1 py-2 placeholder-gray-400"
+                  className="block w-full border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-cyan-500 px-1 py-2 placeholder-gray-400"
                 />
               </div>
               <button
                 type="submit"
                 className="w-full border border-cyan-500 hover:cursor-pointer text-cyan-600 font-semibold py-2 rounded transition hover:bg-cyan-50"
               >
-                  {loading ? 'Creating account...' : 'Register'}
+                {loading ? 'Creating account...' : 'Register'}
               </button>
             </form>
           )}

@@ -1,13 +1,23 @@
 import { MapPin } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CartCard from "../../components/CartCard";
 import NotFound from "../../components/NotFound";
+import { useEffect } from "react";
+import { fetchCart } from '../../redux/slices/newCartSlice'
 
 const CartPage = () => {
 
-  const cart = useSelector((state) => state.cart);
+  const dispatch =  useDispatch()
+
+  const cart = useSelector((state) => state.cart.data);
+  const token = useSelector((state) => state.auth.token);
 
   const grandTotal = cart.reduce((acc, val) => acc + val.price, 0)
+
+  useEffect(() => {
+    dispatch(fetchCart(token))
+  }, [])
+  
 
   return (
     <div className="min-h-screen bg-[#f0f8fb] px-4 py-45">
@@ -16,8 +26,8 @@ const CartPage = () => {
         cart.length > 0 ? <>
           <div className="bg-white p-4 rounded shadow-sm flex flex-col gap-4">
             {
-              cart.map((product) => (
-                <CartCard product={product} />
+              cart.map((product, i) => (
+                <CartCard product={product} key={i} />
               ))
             }
           </div>
