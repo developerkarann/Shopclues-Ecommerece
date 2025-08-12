@@ -1,7 +1,6 @@
 
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { removeFromCart, updateQuantity } from "../redux/slices/cartSlice";
 import CartCard from "@/components/CartCard";
 import { MapPin, Minus, Plus } from "lucide-react";
 

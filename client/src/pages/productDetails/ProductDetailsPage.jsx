@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { addToCart } from "../../redux/slices/cartSlice";
 import Loader from "../../components/Loader";
 import { fetchCart } from "../../redux/slices/newCartSlice";
 
@@ -40,7 +39,7 @@ const ProductDetailsPage = () => {
                 }
             })
             toast.success(res.data.message)
-            navigate('/cart')
+            // navigate('/cart')
         } catch (error) {
             toast.error(error.response?.data?.message)
         }
@@ -56,7 +55,7 @@ const ProductDetailsPage = () => {
     useEffect(() => {
         handleSearch()
         dispatch(fetchCart(token))
-    }, [dispatch, fetchCart, token])
+    }, [dispatch, fetchCart, token, handleAdd])
 
     return (
         <>

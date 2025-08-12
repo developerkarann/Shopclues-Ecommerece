@@ -3,7 +3,6 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 exports.resgisterUser = async (req, res, next) => {
-    // console.log('Registered Triggered', req.body)
     const { email, password , address} = req.body;
     if (!email || !password || !address) {
         return res.status(400).json({ success: false, message: 'Please enter credentials' })
@@ -11,7 +10,7 @@ exports.resgisterUser = async (req, res, next) => {
 
     if(password.length < 6){
         return res.status(400).json({ success: false, message: 'Minimum 6 digit password is required' })
-    }
+    } 
 
     const userExist = await User.findOne({ email })
 
@@ -45,11 +44,10 @@ exports.resgisterUser = async (req, res, next) => {
 }
 
 exports.loginUser = async (req, res) => {
-    console.log('Login user triggered')
+
     const { email, password } = req.body
 
     const user = await User.findOne({ email })
-    console.log(user)
 
     if (!user) {
         return res.status(404).json({
@@ -59,8 +57,6 @@ exports.loginUser = async (req, res) => {
     }
 
     let isValidPass = await bcrypt.compare(password, user.password)
-
-    console.log(isValidPass)
 
     if (!isValidPass) {
        return res.status(400).json({
@@ -75,9 +71,6 @@ exports.loginUser = async (req, res) => {
 
     const options = {
         maxAge: 24 * 60 * 60 * 1000,
-        // path: '/',
-        // sameSite: 'none',
-        // secure: true
     }
 
     res.status(200).cookie('token', token, options).json({
