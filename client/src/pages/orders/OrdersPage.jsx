@@ -4,7 +4,7 @@ import CartCard from "../../components/CartCard";
 import NotFound from "../../components/NotFound";
 import { useEffect } from "react";
 import { fetchCart } from '../../redux/slices/newCartSlice'
-import OrderCard from "../../components/orderCard";
+import OrderCard from "../../components/OrderCard";
 import { fetchOrders } from "../../redux/slices/orderSlice";
 
 const OrdersPage = () => {
