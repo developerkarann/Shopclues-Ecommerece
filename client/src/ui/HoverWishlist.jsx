@@ -1,7 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
-import { toggleWishlist } from "../redux/slices/wishlistSlice";
-import { Link } from "react-router-dom";
 import WishlistCard from "@/components/WishlistCard";
+import { useDispatch, useSelector } from "react-redux";
 
 
 const HoverWishlist = () => {
@@ -68,7 +66,7 @@ const HoverWishlist = () => {
             <div className="absolute right-0 mt-2 w-[600px] h-[500px] overflow-scroll scrollbar-hide p-3 bg-white border border-gray-200 rounded-md shadow-lg opacity-0 group-hover:opacity-100 group-hover:visible invisible transition-all duration-300 z-50">
 
                 <div className="mb-4 flex gap-4">
-                    <span className="pb-2 font-semibold">Wishlist</span>
+                    <span className="pb-2 font-semibold text-2xl">My Wishlist</span>
                 </div>
                 {
                     wishlist.length < 1 ? <>

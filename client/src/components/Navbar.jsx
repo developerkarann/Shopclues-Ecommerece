@@ -1,5 +1,6 @@
 import {
   Heart,
+  Package,
   Search,
   ShoppingCart
 } from "lucide-react";
@@ -10,6 +11,7 @@ import { logout } from "../redux/slices/auth";
 import HoverCard from "../ui/HoverCart";
 import HoverWishlist from "../ui/HoverWishlist";
 import MobileNavbar from "./MobileNavbar";
+import HoverOrders from "../ui/HoverOrders";
 
 const Navbar = ({ searchTerm, setSearchTerm }) => {
 
@@ -17,6 +19,7 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
   const cart = useSelector((state) => state.cart.data);
   const token = useSelector((state) => state.auth.token)
   const user = useSelector((state) => state.auth.user)
+  const orders = useSelector((state) => state.orders.data)
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -123,13 +126,10 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
             {/* Right side */}
             <div className="flex items-center space-x-4 text-cyan-700 gap-2 ">
               <div className="flex items-center space-x-4 text-cyan-700 gap-3 pt-3 ">
-                {/* <div className="relative group">
-                 {token ? <> <span>{user?.name}</span> </> : <></>}
-                </div> */}
 
                 <div className="relative group">
                   <Link to="/wishlist" className="relative inline-block">
-                    <Heart className="w-6 h-6 " />
+                    <Heart className="w-7 h-7 " />
 
                     {wishlist.length > 0 && (
                       <span className="absolute -top-2 -right-3 bg-cyan-600 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
@@ -142,7 +142,7 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
 
                 <div className="relative group">
                   <Link to="/cart" className="relative inline-block">
-                    <ShoppingCart className="w-6 h-6 " />
+                    <ShoppingCart className="w-7 h-7 " />
 
                     {token ? cart.length > 0 && (
                       <span className="absolute -top-2 -right-3 bg-cyan-600 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
@@ -152,6 +152,21 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
                   </Link>
                   {
                     token ? <HoverCard /> : <></>
+                  }
+
+                </div>
+                <div className="relative group">
+                  <Link to="/orders" className="relative inline-block">
+                    <Package className="w-7 h-7 " />
+
+                    {token ? orders.length > 0 && (
+                      <span className="absolute -top-2 -right-3 bg-cyan-600 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                        {orders.length}
+                      </span>
+                    ) : ''}
+                  </Link>
+                  {
+                    token ? <HoverOrders /> : <></>
                   }
 
                 </div>

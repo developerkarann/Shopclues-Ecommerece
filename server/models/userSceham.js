@@ -32,9 +32,28 @@ const userSchema = new mongoose.Schema({
             type: String
         }
     }],
-    myOrders: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Product"
+    orders: [{
+        items: [
+            {
+                productId: { type: String },
+                title: { type: String },
+                image: { type: String },
+                price: { type: String },
+                discount: { type: String }
+            }
+        ],
+        shippingAddress: [{
+            street: { type: String },
+            city: { type: String },
+            state: { type: String },
+            country: { type: String },
+            zip: { type: Number },
+            phone: { type: Number },
+        }],
+        paymentMethod: { type: String },
+        totalAmount: { type: Number },
+        status: { type: String, default: "PLACED" },
+        createdAt: { type: Date, default: Date.now }
     }],
 })
 

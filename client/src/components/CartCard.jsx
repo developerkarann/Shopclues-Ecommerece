@@ -3,6 +3,8 @@ import { Minus, Plus } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { Link } from "react-router-dom";
+
 
 const CartCard = ({ product }) => {
 
@@ -10,7 +12,6 @@ const CartCard = ({ product }) => {
 
     const dispatch = useDispatch()
     let [count, setCounter] = useState(1)
-
 
     const handleDecrement = () => {
         if (count > 1) {
@@ -36,22 +37,23 @@ const CartCard = ({ product }) => {
     }
 
     useEffect(() => {
-      
+
     }, [handleRemove, token])
-    
+
 
     return (
         <>
             <div className="flex gap-4 products-start my-2">
                 <img
-                    // src="https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=300&h=300&fit=crop"
                     src={product.image}
                     alt="Product"
                     className="w-24 h-24 object-contain"
                 />
                 <div className="flex-1">
                     <p className="text-sm font-medium">
-                        {product.title.slice(0, 60)}
+                        <Link to={`/product/${product.productId}`}>
+                            {product.title.slice(0, 60)}
+                        </Link> 
                     </p>
                     <div className="flex products-center gap-3 mt-2">
                         <button className="w-6 h-6 flex products-center justify-center bg-gray-200 rounded-full">
@@ -69,10 +71,10 @@ const CartCard = ({ product }) => {
                         Price : <span className="font-semibold">₹ {product.price + (product.price * product.discount / 100)}</span>
                     </p>
                     <p>
-                        Discount : - ₹ {product.price * product.discount / 100}
+                        Discount : <span className='text-green-500'> - ₹ {product.price * product.discount / 100}</span> 
                     </p>
                     <p>
-                        Shipping Fee : <span className="font-bold">FREE</span>
+                        Shipping Fee : <span className="font-bold text-green-400">FREE</span>
                     </p>
                     <p className="mt-2 font-semibold text-lg">₹ {product.price}</p>
                     <p className="text-xs text-gray-500">

@@ -6,6 +6,7 @@ import Loader from "../../components/Loader";
 import ProductCard from "../../components/ProductCard";
 import { fetchProducts } from "../../redux/slices/productSlice";
 import { fetchCart } from "../../redux/slices/newCartSlice";
+import { fetchOrders } from "../../redux/slices/orderSlice";
 
 const HomePage = ({ searchTerm }) => {
 
@@ -20,6 +21,7 @@ const HomePage = ({ searchTerm }) => {
   useEffect(() => {
     dispatch(fetchProducts())
     dispatch(fetchCart(token))
+    dispatch(fetchOrders(token))
   }, [])
 
   const productCategory = [

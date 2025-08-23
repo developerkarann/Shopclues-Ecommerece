@@ -49,7 +49,7 @@ const ProductDetailsPage = () => {
         if (!token) {
             return navigate('/login')
         }
-        toast.info('This Functionality is under Dev')
+        navigate('/checkout')
     }
 
     useEffect(() => {

@@ -6,7 +6,9 @@ import {
     Search,
     ShoppingCart,
     UserRound,
-    X
+    X,
+  Package,
+
 } from "lucide-react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,6 +23,7 @@ const MobileNavbar = ({ searchTerm, setSearchTerm }) => {
     const wishlist = useSelector((state) => state.wishlist)
     const cart = useSelector((state) => state.cart);
     const token = useSelector((state) => state.auth.token)
+  const orders = useSelector((state) => state.orders.data)
 
 
     const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -110,6 +113,19 @@ const MobileNavbar = ({ searchTerm, setSearchTerm }) => {
                                         </Link>
 
                                     </div>
+
+                                    <div className="relative group">
+                                        <Link to="/orders" className="relative inline-block">
+                                            <Package className="w-6 h-6 " />
+
+                                            {token ? orders.length > 0 && (
+                                                <span className="absolute -top-2 -right-3 bg-cyan-600 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                                                    {orders.length}
+                                                </span>
+                                            ) : ''}
+                                        </Link>
+                                    </div>
+
                                     {
                                         token ? <>
                                             <LogOut onClick={handleLogout} />
