@@ -46,10 +46,9 @@ function App() {
           <Route path='/login' element={<ProtectLogin>  <AuthenticationPage />  </ProtectLogin>} />
           <Route path={'/wishlist'} element={<WishlistPage />} />
           <Route path={'/products'} element={<ProductsPage searchTerm={searchTerm} />} />
-          <Route path={'/checkout'} element={<Checkout />} />
+          <Route path={'/checkout'} element={<ProtectedRoutes> <Checkout /> </ProtectedRoutes>} />
           {/* <Route path={'/dashboard'} element={<Dashboard />} /> */}
-          <Route path={'/orders'} element={<OrdersPage />} />
-
+          <Route path={'/orders'} element={<ProtectedRoutes> <OrdersPage/> </ProtectedRoutes>} />
 
         </Routes>
         <Footer />

@@ -12,6 +12,7 @@ import HoverCard from "../ui/HoverCart";
 import HoverWishlist from "../ui/HoverWishlist";
 import MobileNavbar from "./MobileNavbar";
 import HoverOrders from "../ui/HoverOrders";
+import { useEffect } from "react";
 
 const Navbar = ({ searchTerm, setSearchTerm }) => {
 
@@ -76,7 +77,6 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
     toast.success('Logged Out!')
   }
 
-
   return (
     <>
       <MobileNavbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
@@ -114,7 +114,7 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
                   placeholder="What is on your mind today?"
                   className="flex-1 px-3 py-2 bg-[#eaf7fb] outline-none"
                 />
-                <button type="submit" className="bg-gradient-to-r from-orange-400 to-pink-500 text-white font-semibold px-8 py-3 shadow-md hover:opacity-90 transition">
+                <button type="submit" className="bg-cyan-600 hover:bg-cyan-700 duration-300 hover:cursor-pointer text-white font-semibold px-8 py-3 shadow-md hover:opacity-90 transition">
                   Search
                 </button>
               </div>

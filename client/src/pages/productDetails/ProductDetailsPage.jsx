@@ -28,6 +28,7 @@ const ProductDetailsPage = () => {
             console.log(error.message)
         }
     }
+
     const handleAdd = async () => {
         if (!token) {
             return navigate('/login')
@@ -39,23 +40,40 @@ const ProductDetailsPage = () => {
                 }
             })
             toast.success(res.data.message)
-            // navigate('/cart')
+            navigate('/cart')
         } catch (error) {
+
             toast.error(error.response?.data?.message)
         }
 
     }
-    const handleBuyBtn = () => {
+
+
+    const handleBuyBtn = async () => {
         if (!token) {
             return navigate('/login')
         }
-        navigate('/checkout')
+        try {
+            const res = await axios.post(`${import.meta.env.VITE_SERVER}/cart`, { productId: product.id, title: product.title, image: product.image, price: product.price, discount: product.discount }, {
+                headers: {
+                    Authorization: token,
+                }
+            })
+            toast.success(res.data.message)
+            navigate('/checkout')
+        } catch (error) {
+            if (error.response?.data?.message === 'Already added in the cart') {
+                navigate('/checkout')
+            } else {
+                toast.error(error.response?.data?.message)
+            }
+        }
     }
 
     useEffect(() => {
         handleSearch()
         dispatch(fetchCart(token))
-    }, [dispatch, fetchCart, token, handleAdd])
+    }, [])
 
     return (
         <>

@@ -7,7 +7,7 @@ import {
     ShoppingCart,
     UserRound,
     X,
-  Package,
+    Package,
 
 } from "lucide-react";
 import { useState } from "react";
@@ -23,7 +23,7 @@ const MobileNavbar = ({ searchTerm, setSearchTerm }) => {
     const wishlist = useSelector((state) => state.wishlist)
     const cart = useSelector((state) => state.cart);
     const token = useSelector((state) => state.auth.token)
-  const orders = useSelector((state) => state.orders.data)
+    const orders = useSelector((state) => state.orders.data)
 
 
     const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -39,11 +39,11 @@ const MobileNavbar = ({ searchTerm, setSearchTerm }) => {
     }
 
     const navItems = [
-        { name: 'HOME', href: '/' },
-        { name: 'PRODUCTS', href: '/products' },
-        { name: 'VIEW CART', href: '/cart' },
-        { name: 'VIEW WISHLIST', href: '/wishlist' },
-        { name: 'LOGIN', href: '/login' }
+        { name: 'Home', href: '/' },
+        { name: 'All Products', href: '/products' },
+        { name: 'My Cart', href: '/cart' },
+        { name: 'My Wishlist', href: '/wishlist' },
+        { name: 'My Orders', href: '/wishlist' },
     ];
 
 
@@ -51,6 +51,7 @@ const MobileNavbar = ({ searchTerm, setSearchTerm }) => {
     const handleLogout = () => {
         dispatch(logout())
         toast.success('Logged Out!')
+        closeMenu()
     }
 
     return (
@@ -152,7 +153,7 @@ const MobileNavbar = ({ searchTerm, setSearchTerm }) => {
                                         placeholder="What is on your mind today?"
                                         className="flex-1 px-3 py-2 bg-[#eaf7fb] outline-none"
                                     />
-                                    <button className="bg-gradient-to-r from-orange-400 to-pink-500 text-white font-semibold px-8 py-3 shadow-md hover:opacity-90 transition">
+                                    <button className="bg-cyan-600 hover:bg-cyan-700 duration-300 hover:cursor-pointer text-white font-semibold px-8 py-3 shadow-md hover:opacity-90 transition">
                                         Search
                                     </button>
                                 </div>
@@ -200,6 +201,10 @@ const MobileNavbar = ({ searchTerm, setSearchTerm }) => {
                                                 navItems.map((item, i) => (
                                                     <Link to={item.href} key={i} onClick={closeMenu} >{item.name} </Link>
                                                 ))
+                                            }
+                                            {
+                                                token ?  <Link to='/' onClick={handleLogout} >Logout </Link> :
+                                                 <Link to='/login'  onClick={closeMenu} > Login </Link>
                                             }
                                         </div>
                                     </div>

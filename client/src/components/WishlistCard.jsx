@@ -25,14 +25,14 @@ const WishlistCard = ({product}) => {
                         </div>
 
                         <div className="flex flex-col gap-2 text-sm">
-                            <button className="bg-gradient-to-r from-orange-400 hover:cursor-pointer rounded to-pink-500 text-white font-semibold px-2 py-2 shadow-md hover:opacity-90 transition">
+                            <button className="bg-cyan-600 hover:bg-cyan-700 duration-300 hover:cursor-pointer rounded text-white font-semibold px-2 py-2 shadow-md hover:opacity-90 transition">
                                 <Link to={`/product/${product.id}`}>
                                     Buy Now
                                 </Link>
                             </button>
                             <button
                                 onClick={() => dispatch(toggleWishlist(product))}
-                                className=" text-orange-400 border border-orange-400  hover:cursor-pointer rounded font-semibold px-6 py-2 shadow-md hover:opacity-90 transition">
+                                className=" text-cyan-600 border border-cyan-600  hover:cursor-pointer rounded font-semibold px-6 py-2 shadow-md hover:opacity-90 transition">
                                 Remove
                             </button>
                         </div>
