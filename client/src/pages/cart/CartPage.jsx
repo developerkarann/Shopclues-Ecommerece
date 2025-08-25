@@ -4,6 +4,7 @@ import CartCard from "../../components/CartCard";
 import NotFound from "../../components/NotFound";
 import { useEffect } from "react";
 import { fetchCart } from '../../redux/slices/newCartSlice'
+import { Link } from "react-router-dom";
 
 const CartPage = () => {
 
@@ -53,7 +54,9 @@ const CartPage = () => {
 
             <div className="flex justify-end mt-4">
               <button className="bg-cyan-600 hover:bg-cyan-700 duration-300 hover:cursor-pointer text-white text-sm font-medium px-6 py-2 rounded">
+              <Link to='/checkout'>
                 Place Order
+              </Link>
               </button>
             </div>
           </div>

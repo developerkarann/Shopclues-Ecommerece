@@ -34,7 +34,7 @@ const Checkout = ({ total = 1596 }) => {
     { id: 3, title: "Payment", icon: <Landmark className="w-6 h-6" /> },
   ];
 
-  // ✅ Check if step is valid before moving forward
+  //  Check if step is valid before moving forward
   const isStepValid = (targetStep) => {
     if (targetStep === 2) {
       return (
@@ -56,7 +56,7 @@ const Checkout = ({ total = 1596 }) => {
     if (targetStep <= step || isStepValid(targetStep)) {
       setStep(targetStep);
     } else {
-      alert("Please complete the required fields before continuing.");
+      toast.error("Please complete the required fields before continuing.");
     }
   };
 

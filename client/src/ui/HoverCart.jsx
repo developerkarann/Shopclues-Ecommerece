@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CartCard from "@/components/CartCard";
 import { MapPin, Minus, Plus } from "lucide-react";
+import { Link } from "react-router-dom";
 
 
 const HoverCard = () => {
@@ -55,7 +56,9 @@ const HoverCard = () => {
 
                                 <div className="flex justify-end mt-4">
                                     <button className="bg-cyan-600 hover:bg-cyan-700 duration-300 hover:cursor-pointer text-white text-sm font-medium px-6 py-2 rounded">
+                                     <Link to="/checkout">
                                         Place Order
+                                     </Link>
                                     </button>
                                 </div>
                             </div>
