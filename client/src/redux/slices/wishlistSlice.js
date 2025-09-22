@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const loadFromLocalStorage = () => {
     try {
-        const data = localStorage.getItem('wishlist');
+        const data = sessionStorage.getItem('wishlist');
         return data ? JSON.parse(data) : [];
     } catch {
         return [];
@@ -11,7 +11,7 @@ const loadFromLocalStorage = () => {
 
 const saveToLocalStorage = (state) => {
     try {
-        localStorage.setItem('wishlist', JSON.stringify(state));
+        sessionStorage.setItem('wishlist', JSON.stringify(state));
     } catch (e) {
         console.error('Failed to save wishlist', e);
     }
