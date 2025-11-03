@@ -202,7 +202,7 @@ const Checkout = ({ total = 1596 }) => {
       <div className=" rounded-xl p-6 max-w-7xl mx-auto">
         {/* Step 1: Shipping */}
         {step === 1 && (
-          <div className="w-[50%] flex justify-center flex-col m-auto rounded-2xl shadow-2xl px-10 py-10" >
+          <div className="md:w-[50%] flex justify-center flex-col m-auto rounded-2xl shadow-2xl px-10 py-10" >
             <h2 className="text-3xl text-cyan-700 font-semibold mb-8">Shipping Details</h2>
             <form className="space-y-8">
               <div className="flex items-center border border-cyan-500  rounded-lg px-3 py-2">
@@ -354,7 +354,7 @@ const Checkout = ({ total = 1596 }) => {
         {/* Step 3: Payment */}
         {step === 3 && (
           <>
-            <div className=" w-[50%] flex m-auto flex-col shadow-2xl px-10 py-5" >
+            <div className=" md:w-[50%] flex m-auto flex-col shadow-2xl px-10 py-5" >
               {/* Left: Payment Modes */}
               <div className="mb-10">
                 <h3 className="font-semibold text-gray-800 mb-4">Select Payment Mode</h3>
