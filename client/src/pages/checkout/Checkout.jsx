@@ -7,9 +7,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 
-
 const Checkout = ({ total = 1596 }) => {
-
 
   const cart = useSelector((state) => state.cart.data);
   const token = useSelector((state) => state.auth.token);
@@ -63,7 +61,7 @@ const Checkout = ({ total = 1596 }) => {
 
   const paymentMethods = [
     { name: "COD", disabled: false },
-    { name: "Online", disabled: true},
+    { name: "Online", disabled: false },
     { name: "NET Banking", disabled: true },
   ];
 
@@ -71,9 +69,8 @@ const Checkout = ({ total = 1596 }) => {
   const totalDiscount = cart.reduce((acc, val) => acc + val.discount, 0)
   const grandTotal = totalValue - totalDiscount
 
-  const handleCreateOrder = async (e) => {
-    e.preventDefault()
-
+  const handleCreateOrder = async () => {
+    console.log('Handle Create Order Tringgered')
     if (!token) {
       return navigate('/login')
     }
@@ -85,10 +82,85 @@ const Checkout = ({ total = 1596 }) => {
       })
       toast.success(res.data.message)
       navigate('/orders')
+      
     } catch (error) {
       toast.error(error.response?.data?.message)
     }
   }
+  // Razorpay Payment Integrations
+
+  const loadRazorpayScript = async () => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
+  const handlePayment = async () => {
+    const isLoaded = await loadRazorpayScript();
+    if (!isLoaded) {
+      alert("Razorpay SDK failed to load. Check your connection.");
+      return;
+    }
+
+    try {
+      // Step 1: Create order on backend
+      const { data } = await axios.post(`${import.meta.env.VITE_SERVER}/create-order`, {
+        amount: grandTotal,
+      });
+
+      if (!data.success) {
+        alert("Order creation failed.");
+        return;
+      }
+
+      const { order } = data;
+
+      // Step 2: Create Razorpay options
+      const options = {
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID, // ✅ Replace with your actual test key ID
+        amount: order.amount.toString(),
+        currency: "INR",
+        name: "Shopeclues E-Commerce Store",
+        description: "Payment for your order",
+        order_id: order.id,
+        handler: async function (response) {
+          // Step 3: Verify payment on backend
+          const verify = await axios.post(`${import.meta.env.VITE_SERVER}/verify-payment`, response);
+          if (verify.data.success) {
+            handleCreateOrder()
+            // toast.success('Payment Successful!')
+          } else {
+            alert("❌ Payment Verification Failed!");
+          }
+        },
+        prefill: {
+          name: "Jaana",
+          email: "jaana@example.com",
+          contact: "9999999999",
+        },
+        notes: {
+          address: "Test payment",
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+
+      // Step 4: Open Razorpay popup
+      const razorpayInstance = new window.Razorpay(options);
+      razorpayInstance.open();
+
+      razorpayInstance.on("payment.failed", function (response) {
+        alert("Payment failed. Please try again.");
+        console.log(response.error);
+      });
+    } catch (err) {
+      console.error("Payment error:", err);
+    }
+  };
 
   return (
     <div className="bg-gray-50 min-h-screen p-6 py-45">
@@ -315,7 +387,7 @@ const Checkout = ({ total = 1596 }) => {
 
               {/* Center: UPI Info + Place Order */}
               <div className="flex flex-col items-center justify-center px-4">
-                <button onClick={handleCreateOrder} className="w-full bg-cyan-600 hover:bg-cyan-700 hover:cursor-pointer duration-300 text-white py-3 rounded shadow text-lg">
+                <button onClick={() => paymentMethod === 'Online' ? handlePayment(grandTotal) : handleCreateOrder()} className="w-full bg-cyan-600 hover:bg-cyan-700 hover:cursor-pointer duration-300 text-white py-3 rounded shadow text-lg">
                   Place order for ₹{grandTotal}
                 </button>
                 <p className="text-sm text-gray-500 mt-5 flex items-center gap-2">
@@ -334,6 +406,17 @@ const Checkout = ({ total = 1596 }) => {
                   </svg>
                   Secure Payment, Easy Returns & Refunds
                 </p>
+                <p className="text-sm text-gray-500 mt-5 flex items-center gap-2">
+                  Use below card details for test payments:
+                </p>
+                <p className="text-sm text-gray-500 mt-5 flex items-center gap-2">
+                  Mastercard	2305 3242 5784 8228	Random CVV	Any future date
+                </p>
+                <p className="text-sm text-gray-500 mt-5 flex items-center gap-2">
+                  Visa	4386 2894 0766 0153	Random CVV	Any future date
+                </p>
+
+
               </div>
 
             </div>

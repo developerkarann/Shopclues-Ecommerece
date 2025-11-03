@@ -6,6 +6,7 @@ const userRoutes = require('./routes/userRoute')
 const productRoutes = require('./routes/productsRoute')
 const cartRoutes = require('./routes/cartRoutes')
 const orderRoutes = require('./routes/orderRoutes')
+const paymentRoute = require('./routes/paymentRoutes')
 
 
 app.use(cors({
@@ -20,6 +21,7 @@ app.use('/api', userRoutes)
 app.use('/api', productRoutes)
 app.use('/api', cartRoutes)
 app.use('/api', orderRoutes)
+app.use('/api', paymentRoute)
 
 
 
